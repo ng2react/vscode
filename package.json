@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "ng2react.helloWorld",
-        "title": "Hello World"
+        "command": "ng2react.convert",
+        "title": "ng2react: Convert"
       }
     ]
   },
@@ -26,6 +26,9 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
+  },
+  "dependencies": {
+    "@ng2react/core": "latest"
   },
   "devDependencies": {
     "@types/vscode": "^1.77.0",
