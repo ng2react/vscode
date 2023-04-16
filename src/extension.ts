@@ -13,10 +13,11 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('ng2react.convert', convertCurrentFile);
+	context.subscriptions.push(
+		vscode.commands.registerCommand('ng2react.convert', () => convertCurrentFile(context))
+	);
 
-	context.subscriptions.push(disposable);
+	// TODO: Context specific commands
 }
-
 // This method is called when your extension is deactivated
 export function deactivate() { }
