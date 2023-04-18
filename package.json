@@ -14,10 +14,37 @@
   "contributes": {
     "commands": [
       {
-        "command": "ng2react.convert",
-        "title": "ng2react: Convert"
+        "command": "ng2react.convertCurrentFile",
+        "title": "Convert AngularJS to React"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "ng2react.convertCurrentFile",
+          "group": "ng2react",
+          "when": "editorLangId == 'typescript' || editorLangId == 'javascript'"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "ng2react",
+      "properties": {
+        "ng2react.openai.token": {
+          "type": "string",
+          "default": "",
+          "description": "API key for openai"
+        },
+        "ng2react.openai.engine": {
+          "type": "string",
+          "default": "gpt-4",
+          "description": "OpenAI engine to use"
+        },
+        "ng2react.openai.orginisationId": {
+          "type": "string"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -28,7 +55,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "dependencies": {
-    "@ng2react/core": "0.0.0-alpha.1",
+    "@ng2react/core": "^0.0.0-alpha.10",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
