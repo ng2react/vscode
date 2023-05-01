@@ -45,17 +45,17 @@ export default function convertCurrentFile(context: vscode.ExtensionContext) {
 
 	async function convertComponent(component: AngularComponent) {
 
-		const {apiKey, model, organization} = vscode.workspace.getConfiguration('ng2react.openai');
-		
+		const { apiKey, model, organisation } = vscode.workspace.getConfiguration('ng2react.openai');
+
 		if (typeof apiKey !== 'string') {
 			vscode.window.showErrorMessage('OpenAI API key is not set');
 			return;
 		}
-	
+
 		const { markdown, jsx } = (await convert(component, {
 			apiKey,
 			model,
-			organization: organization || undefined
+			organization: organisation || undefined
 		}))[0];
 
 		return displayMarkdownResult(component.name, markdown);
@@ -88,7 +88,7 @@ export default function convertCurrentFile(context: vscode.ExtensionContext) {
 
 			async function writeToFile(content: string) {
 				const { fileName } = component.node.getSourceFile();
-				const componentName = startCase(component.name);
+				const componentName = toPascalCase(component.name);
 				const fileExtension = fileName.endsWith('.ts') ? '.tsx' : '.jsx';
 				const newFileName = componentName + fileExtension;
 				const newFilePath = fileName.replace(/[^\/]+$/, newFileName);
@@ -138,4 +138,8 @@ export default function convertCurrentFile(context: vscode.ExtensionContext) {
 			}
 		}
 	}
+}
+
+function toPascalCase(name: string) {
+	return startCase(name).replace(/ /g, '');
 }

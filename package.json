@@ -38,10 +38,12 @@
         "ng2react.openai.model": {
           "type": "string",
           "default": "gpt-4",
+          "enum": ["gpt-4", "gpt-3.5-turbo", "davinci"],
           "description": "OpenAI model to use"
         },
         "ng2react.openai.orginisation": {
-          "type": "string"
+          "type": "string",
+          "default": "Optional orginisation ID to use with openai"
         }
       }
     }
@@ -55,7 +57,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "dependencies": {
-    "@ng2react/core": "^0.0.0-alpha.17",
+    "@ng2react/core": "^0.0.0-alpha.19",
     "lodash": "^4.17.21",
     "markdown-it": "^13.0.1"
   },
