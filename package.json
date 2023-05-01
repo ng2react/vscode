@@ -4,7 +4,7 @@
   "description": "Convert AngularJS to React with generative AI",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.77.0"
+    "vscode": "^1.22.0"
   },
   "categories": [
     "Other"
@@ -30,17 +30,17 @@
     "configuration": {
       "title": "ng2react",
       "properties": {
-        "ng2react.openai.token": {
+        "ng2react.openai.apiKey": {
           "type": "string",
           "default": "",
           "description": "API key for openai"
         },
-        "ng2react.openai.engine": {
+        "ng2react.openai.model": {
           "type": "string",
           "default": "gpt-4",
-          "description": "OpenAI engine to use"
+          "description": "OpenAI model to use"
         },
-        "ng2react.openai.orginisationId": {
+        "ng2react.openai.orginisation": {
           "type": "string"
         }
       }
@@ -49,13 +49,13 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "watch": "tsc -watch -p ./src",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
   },
   "dependencies": {
-    "@ng2react/core": "^0.0.0-alpha.10",
+    "@ng2react/core": "^0.0.0-alpha.17",
     "lodash": "^4.17.21",
     "markdown-it": "^13.0.1"
   },
@@ -64,7 +64,7 @@
     "@types/lodash": "^4.14.194",
     "@types/markdown-it": "^12.2.3",
     "@types/mocha": "^10.0.1",
-    "@types/node": "16.x",
+    "@types/node": "18",
     "@types/vscode": "^1.77.0",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
@@ -72,6 +72,6 @@
     "eslint": "^8.34.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
-    "typescript": "^4.9.5"
+    "typescript": "5"
   }
 }

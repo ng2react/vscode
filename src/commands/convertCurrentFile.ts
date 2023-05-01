@@ -1,8 +1,10 @@
 import * as vscode from 'vscode';
-import { createAst, findComponents, AngularComponent } from "@ng2react/core";
+import { search, convert } from "@ng2react/core";
 import { startCase } from 'lodash';
 import * as fs from 'fs';
 import * as MarkdownIt from 'markdown-it';
+
+type AngularComponent = ReturnType<typeof search>[0];
 
 export default function convertCurrentFile(context: vscode.ExtensionContext) {
 	if (!vscode.window.activeTextEditor) {
@@ -21,8 +23,7 @@ export default function convertCurrentFile(context: vscode.ExtensionContext) {
 	async function convertComponents(document: vscode.TextDocument) {
 		const shortFileName = document.fileName.split('/').pop()!;
 		try {
-			const ast = createAst(document.fileName, document.getText());
-			const ngComponents = findComponents(ast);
+			const ngComponents = search(document.getText(), { filename: document.fileName });
 			if (!ngComponents.length) {
 				vscode.window.showInformationMessage(`No components found in ${shortFileName}`);
 				return;
@@ -44,7 +45,18 @@ export default function convertCurrentFile(context: vscode.ExtensionContext) {
 
 	async function convertComponent(component: AngularComponent) {
 
-		const markdown = `\`\`\`typescript\n${component.node.getText()}\n\`\`\``;
+		const {apiKey, model, organization} = vscode.workspace.getConfiguration('ng2react.openai');
+		
+		if (typeof apiKey !== 'string') {
+			vscode.window.showErrorMessage('OpenAI API key is not set');
+			return;
+		}
+	
+		const { markdown, jsx } = (await convert(component, {
+			apiKey,
+			model,
+			organization: organization || undefined
+		}))[0];
 
 		return displayMarkdownResult(component.name, markdown);
 
@@ -66,7 +78,7 @@ export default function convertCurrentFile(context: vscode.ExtensionContext) {
 
 			panel.webview.onDidReceiveMessage((message) => {
 				if (message.command === 'writeToFile') {
-					writeToFile(content);
+					writeToFile(jsx);
 				}
 				vscode.window.showInformationMessage(`Received: ${message.text}`);
 			},
@@ -74,7 +86,7 @@ export default function convertCurrentFile(context: vscode.ExtensionContext) {
 				context.subscriptions);
 
 
-			async function writeToFile(markdown: string) {
+			async function writeToFile(content: string) {
 				const { fileName } = component.node.getSourceFile();
 				const componentName = startCase(component.name);
 				const fileExtension = fileName.endsWith('.ts') ? '.tsx' : '.jsx';
@@ -84,7 +96,7 @@ export default function convertCurrentFile(context: vscode.ExtensionContext) {
 				fs.writeFileSync(newFilePath, '', 'utf8');
 				const newFile = await vscode.workspace.openTextDocument(newFilePath);
 				const newEditor = await vscode.window.showTextDocument(newFile);
-				const newContent = `import React from 'react';\n\nconst ${componentName} = () => (<>TODO</>););`;
+				const newContent = content;
 				newEditor.edit(edit => {
 					edit.replace(new vscode.Range(0, 0, newFile.lineCount, 0), newContent);
 				});
