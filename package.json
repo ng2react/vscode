@@ -56,11 +56,13 @@
   },
   "dependencies": {
     "@ng2react/core": "^0.0.0-alpha.10",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "markdown-it": "^13.0.1"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/lodash": "^4.14.194",
+    "@types/markdown-it": "^12.2.3",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
     "@types/vscode": "^1.77.0",
