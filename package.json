@@ -78,7 +78,7 @@
             "yes",
             "no",
             "auto"
-          ],  
+          ],
           "description": "Enable ng2react. If 'auto' is selected, ng2react will only be enabled if an angularjs project is detected"
         },
         "ng2react.openai.apiKey": {
@@ -104,7 +104,14 @@
         },
         "ng2react.openai.orginisation": {
           "type": "string",
-          "default": "Optional orginisation ID to use with openai"
+          "default": "Optional orginisation ID to use with openai",
+          "scope": "application"
+        },
+        "ng2react.openai.temperature": {
+          "type": "number",
+          "default": 0.7,
+          "description": "Temperature to use with openai",
+          "scope": "application"
         }
       }
     }
