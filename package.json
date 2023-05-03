@@ -9,37 +9,98 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "workspaceContains:**/*.{js,ts}",
+    "onStartupFinished"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "ng2react.convertCurrentFile",
-        "title": "Convert AngularJS to React"
+        "command": "ng2react.analyseFile",
+        "title": "ng2react: Analyse File",
+        "icon": "$(search)",
+        "when": "ng2react.isActive && (editorLangId == 'typescript' || editorLangId == 'javascript')"
+      },
+      {
+        "command": "ng2react.convertToReact",
+        "title": "ng2react: Convert to React",
+        "icon": "$(globe)",
+        "when": "ng2react.isActive && (editorLangId == 'typescript' || editorLangId == 'javascript')"
+      },
+      {
+        "command": "ng2react.refreshTreeView",
+        "title": "ng2react: Scan Project for AngularJS Components",
+        "shortTitle": "Scan Project",
+        "icon": "$(refresh)",
+        "when": "ng2react.isActive"
       }
     ],
     "menus": {
+      "view/title": [
+        {
+          "command": "ng2react.refreshTreeView",
+          "when": "view == ng2react.treeView",
+          "group": "navigation"
+        }
+      ],
       "editor/context": [
         {
-          "command": "ng2react.convertCurrentFile",
+          "command": "ng2react.analyseFile",
           "group": "ng2react",
-          "when": "editorLangId == 'typescript' || editorLangId == 'javascript'"
+          "when": "ng2react.isActive && (editorLangId == 'typescript' || editorLangId == 'javascript')"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "ng2react.treeView",
+        "contents": "Scan project for AngularJS components that can be converted to React?\n[Scan](command:ng2react.refreshTreeView)"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "ng2react.treeView",
+          "name": "AngularJS to React",
+          "visibility": "visible",
+          "when": "ng2react.isActive"
         }
       ]
     },
     "configuration": {
       "title": "ng2react",
       "properties": {
+        "ng2react.enabled": {
+          "type": "string",
+          "default": "auto",
+          "enum": [
+            "yes",
+            "no",
+            "auto"
+          ],  
+          "description": "Enable ng2react. If 'auto' is selected, ng2react will only be enabled if an angularjs project is detected"
+        },
         "ng2react.openai.apiKey": {
           "type": "string",
           "default": "",
-          "description": "API key for openai"
+          "description": "API key for openai",
+          "scope": "application"
         },
         "ng2react.openai.model": {
           "type": "string",
           "default": "gpt-4",
-          "enum": ["gpt-4", "gpt-3.5-turbo", "davinci"],
-          "description": "OpenAI model to use"
+          "enum": [
+            "gpt-4",
+            "gpt-3.5-turbo",
+            "text-davinci-003",
+            "text-davinci-002",
+            "text-curie-001",
+            "text-babbage-001",
+            "text-ada-001"
+          ],
+          "description": "OpenAI model to use. Currently only gpt modules are supported",
+          "scope": "application"
         },
         "ng2react.openai.orginisation": {
           "type": "string",
@@ -51,13 +112,13 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./src",
+    "watch": "tsc -watch -p .",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
   },
   "dependencies": {
-    "@ng2react/core": "^0.0.0-alpha.19",
+    "@ng2react/core": "^1.0.0-alpha.1",
     "lodash": "^4.17.21",
     "markdown-it": "^13.0.1"
   },
