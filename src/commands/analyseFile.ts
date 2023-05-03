@@ -31,5 +31,5 @@ export default async function analyseFileCmd(uri: vscode.Uri | undefined) {
 		return;
 	}
 
-	vscode.commands.executeCommand('ng2react.convertToReact', uri.fsPath, selectedComponentName);
+	vscode.commands.executeCommand('ng2react.convertToReact', uri, selectedComponentName);
 }

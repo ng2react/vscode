@@ -3,11 +3,11 @@ import * as MarkdownIt from 'markdown-it';
 import * as vscode from 'vscode';
 export type AngularComponent = ReturnType<typeof search>[0];
 
-export default function displayMarkdownResult(markdown: string, index: number, ngComponent: AngularComponent) {
+export default function displayMarkdownResult(markdown: string, index: number, componentName: string) {
 
     const panel = vscode.window.createWebviewPanel(
         `ng2react`,
-        `ng2react: ${ngComponent.name}`,
+        `ng2react: ${componentName}`,
         vscode.ViewColumn.Beside,
         {
             enableScripts: true,
@@ -16,7 +16,7 @@ export default function displayMarkdownResult(markdown: string, index: number, n
     );
 
     // Set the webview content to the rendered Markdown
-    panel.webview.html = getHtml(`${ngComponent.name} - Option ${index + 1}`, markdown);
+    panel.webview.html = getHtml(`${componentName} - Option ${index + 1}`, markdown);
 
     return panel;
 }

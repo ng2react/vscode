@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 export default function searchDocument(document: vscode.TextDocument) {
 	assertJs(document);
-	return search(document.getText(), { filename: document.fileName });
+	return search(document.getText(), { file: document.fileName });
 }
 
 /**

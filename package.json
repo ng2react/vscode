@@ -81,6 +81,12 @@
           ],
           "description": "Enable ng2react. If 'auto' is selected, ng2react will only be enabled if an angularjs project is detected"
         },
+        "ng2react.sourceRoot": {
+          "type": "string",
+          "default": "src",
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.\\-/]+)+$",
+          "description": "Root of your angularjs source code, where all your angularjs components and templates are located"
+        },
         "ng2react.openai.apiKey": {
           "type": "string",
           "default": "",
@@ -109,7 +115,9 @@
         },
         "ng2react.openai.temperature": {
           "type": "number",
-          "default": 0.7,
+          "default": 0.2,
+          "minimum": 0,
+          "maximum": 2,
           "description": "Temperature to use with openai",
           "scope": "application"
         }
@@ -125,7 +133,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "dependencies": {
-    "@ng2react/core": "^1.0.0-alpha.1",
+    "@ng2react/core": "^1.0.0-alpha.3",
     "lodash": "^4.17.21",
     "markdown-it": "^13.0.1"
   },

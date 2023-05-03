@@ -4,11 +4,11 @@ import { startCase } from 'lodash';
 import * as vscode from 'vscode';
 export type AngularComponent = ReturnType<typeof search>[0];
 
-export default async function writeToFile(jsx: string, ngComponent: AngularComponent) {
-    const { fileName } = ngComponent.node.getSourceFile();
-    const componentName = toPascalCase(ngComponent.name);
-    const fileExtension = fileName.endsWith('.ts') ? '.tsx' : '.jsx';
-    const newFileName = componentName + fileExtension;
+export default async function writeToFile(jsx: string, angularName: string, uri: vscode.Uri) {
+    const fileName = uri.path;
+    const reactName = toPascalCase(angularName);
+    const fileExtension = uri.path.endsWith('.ts') ? '.tsx' : '.jsx';
+    const newFileName = reactName + fileExtension;
     const newFilePath = fileName.replace(/[^\/]+$/, newFileName);
 
     fs.writeFileSync(newFilePath, '', 'utf8');
