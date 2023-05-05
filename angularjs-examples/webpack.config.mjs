@@ -5,7 +5,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname)
 export default {
     mode: 'development',
     entry: {
-        app: path.resolve(__dirname, 'src/app.js')
+        app: path.resolve(__dirname, 'src/angular/app.js')
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -14,12 +14,17 @@ export default {
     module: {
         rules: [
             {
-                test: /\.{js,ts}$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'ts-loader',
-                }
+                use: { loader: 'babel-loader' }
             },
+            // {
+            //     test: /\.{js,ts,jsx,tsx}$/,
+            //     exclude: /node_modules/,
+            //     use: {
+            //         loader: 'ts-loader',
+            //     }
+            // },
             {
                 test: /\.html$/,
                 use: {
@@ -34,20 +39,26 @@ export default {
         ]
     },
     resolve: {
-        extensions: ['.js', '.ts'],
+        extensions: ['.js', '.ts', '.jsx', '.tsx'],
     },
     devServer: {
         compress: true,
         port: 9000,
         open: true,
-        static: path.resolve(__dirname, 'dist'),
+        static: [
+            {
+                directory: path.resolve(__dirname, 'src/angular'),
+                publicPath: '/templates',
+                serveIndex: true
+            }
+        ],
         client: {
             overlay: false
         }
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/app.html',
+            template: './src/angular/app.html',
         }),
     ]
 }

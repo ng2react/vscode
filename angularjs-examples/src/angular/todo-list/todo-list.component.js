@@ -1,5 +1,4 @@
 import angular from "angular";
-import todoListTpl from "./todo-list.html";
 import './todo-list.css'
 
 class TodoListCtrl {
@@ -29,7 +28,7 @@ class TodoListCtrl {
 angular.module('todoList', [])
     .component('todoList', {
         controller: TodoListCtrl,
-        templateUrl: './todo-list.html',
+        templateUrl: 'templates/todo-list/todo-list.tpl.html',
         bindings: {
             items: '<',
         }
