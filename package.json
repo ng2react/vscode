@@ -2,7 +2,7 @@
   "name": "ng2react-vscode",
   "displayName": "AngularJS to React",
   "description": "Convert AngularJS to React with generative AI",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/maxbilbow/ng2react-vscode.git"
