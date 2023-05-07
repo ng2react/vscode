@@ -18,3 +18,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [0.0.4] - 2023-05-07
 - Updated documentation
+
+## [0.0.5] - 2023-05-07
+- Excluded unwanted files from package
