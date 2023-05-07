@@ -1,6 +1,8 @@
 # ng2react (AngularJS to React)
 
-> An experimental extension for converting AngularJS to React, leveraging OpenAI's GPT API.
+An experimental extension for converting AngularJS to React, leveraging OpenAI's GPT API.
+
+**Early Alpha Release**
 
 ## Features
 
