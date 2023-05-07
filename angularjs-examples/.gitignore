@@ -3,4 +3,4 @@
 /dist
 /build
 /.vscode
-**/*.{j,t}sx
+/src/angular/**/*.{j,t}sx
