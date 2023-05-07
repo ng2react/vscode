@@ -5,7 +5,7 @@
   "version": "0.0.8",
   "repository": {
     "type": "git",
-    "url": "https://github.com/maxbilbow/ng2react-vscode.git"
+    "url": "https://github.com/ng2react/vscode.git"
   },
   "publisher": "maxbilbow",
   "engines": {
