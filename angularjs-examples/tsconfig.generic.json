@@ -1,13 +1,13 @@
 {
-   "compilerOptions": {
-      "outDir": "out",
-      "rootDir": "src",
-      "lib": ["ESNext", "DOM", "DOM.Iterable"],
-      "allowJs": true,
-      "checkJs": true,
-      "module": "NodeNext",
-      "target": "ES2021",
-      "moduleResolution": "bundler",
-      "allowArbitraryExtensions": true
-   }
+  "compilerOptions": {
+    "outDir": "out",
+    "rootDir": "src",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "allowJs": true,
+    "checkJs": true,
+    "module": "NodeNext",
+    "target": "ES2021",
+    "moduleResolution": "bundler",
+    "allowArbitraryExtensions": true
+  }
 }

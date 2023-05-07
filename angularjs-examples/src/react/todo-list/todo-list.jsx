@@ -1,8 +1,7 @@
-import React from "react";
-import "./todo-list.css";
+import React from 'react';
+import './todo-list.css';
 
 const TodoList = ({ items, setItems }) => {
-
   return (
     <div className="todoList">
       <h1>Todo List</h1>
@@ -30,8 +29,8 @@ const TodoList = ({ items, setItems }) => {
 
   function onAddItem(submitEvent) {
     submitEvent.preventDefault();
-    let newItem = new FormData(submitEvent?.target).get("newItem");
-    if (typeof newItem !== "string") {
+    let newItem = new FormData(submitEvent?.target).get('newItem');
+    if (typeof newItem !== 'string') {
       return;
     }
     newItem = newItem.trim();
@@ -43,12 +42,12 @@ const TodoList = ({ items, setItems }) => {
       items.push(newItem);
     }
     submitEvent.target.reset();
-    setItems({items})
+    setItems({ items });
   }
 
   function onDeleteItem(index) {
     items.splice(index, 1);
-    setItems({items})
+    setItems({ items });
   }
 };
 
