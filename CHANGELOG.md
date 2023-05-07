@@ -15,3 +15,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [0.0.3] - 2023-05-07
 - Changlog added!
+
+## [0.0.4] - 2023-05-07
+- Updated documentation
