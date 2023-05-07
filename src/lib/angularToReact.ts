@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import displayMarkdownResult from "./displayMarkdownResult";
 import writeToFile from "./writeToFile";
+import { getDummyResponse, isSandbox } from "./sandboxMode";
 export type AngularComponent = ReturnType<typeof search>[0];
 let currentConversion = '';
 
@@ -36,6 +37,9 @@ export default async function convertToReact(uri: vscode.Uri, componentName: str
 }
 
 async function doConversion(uri: vscode.Uri, componentName: string, progress: vscode.Progress<{ message?: string; increment?: number }>, cancellationToken: vscode.CancellationToken) {
+    if (isSandbox()) {
+        return getDummyResponse(componentName);
+    }
     const { apiKey, model, organisation, temperature } = vscode.workspace.getConfiguration('ng2react.openai');
     if (typeof apiKey !== 'string') {
         throw Error('Conversion failed: OpenAI API key is not set');

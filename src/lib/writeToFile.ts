@@ -11,6 +11,17 @@ export default async function writeToFile(jsx: string, angularName: string, uri:
     const newFileName = reactName + fileExtension;
     const newFilePath = fileName.replace(/[^\/]+$/, newFileName);
 
+    if (fs.existsSync(newFilePath)) {
+        const answer = await vscode.window.showWarningMessage(
+            `File ${newFileName} already exists. Overwrite?`,
+            'Yes',
+            'No'
+        );
+        if (answer !== 'Yes') {
+            return;
+        }
+    }
+
     fs.writeFileSync(newFilePath, '', 'utf8');
     const newFile = await vscode.workspace.openTextDocument(newFilePath);
     const newEditor = await vscode.window.showTextDocument(newFile);
@@ -20,6 +31,6 @@ export default async function writeToFile(jsx: string, angularName: string, uri:
     });
 }
 
-function toPascalCase(name: string) {
+export function toPascalCase(name: string) {
     return startCase(name).replace(/ /g, '');
 }

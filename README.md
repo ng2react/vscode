@@ -21,6 +21,7 @@ This extension contributes the following settings:
 * `ng2react.openai.orginization`: An optional organization ID assiciated with your OpenAI account. 
 * `ng2react.sourceRoot`: The source root of your AngularJS project. Defaults to `src`.
 * `ng2react.enabled`: Whether or not the extension is enabled. Defaults to `auto`.
+* `ng2react.sandboxMode`: Whether or not to run the extension in sandbox mode. Defaults to `false`.
 
 ## Known Issues
 
@@ -35,3 +36,7 @@ Users appreciate release notes as you update your extension.
 ### 0.0.1
 
 Initial release of ng2react.
+
+### 0.0.2
+* Added `ng2react.sandbox` setting to enable testing without an OpenAI API key.
+* Prevented unchecked overwriting of files.

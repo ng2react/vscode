@@ -86,6 +86,11 @@
           ],
           "description": "Enable ng2react. If 'auto' is selected, ng2react will only be enabled if an angularjs project is detected"
         },
+        "ng2react.sandbox": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Enable sandbox mode. This will disable all network requests and generate a dummy response. Useful for UI testing and debugging."
+        },
         "ng2react.sourceRoot": {
           "type": "string",
           "default": "src",
