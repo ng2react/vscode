@@ -3,4 +3,5 @@
 /dist
 /build
 /.vscode
-/src/angular/**/*.{j,t}sx
+/src/angular/**/*.jsx
+/src/angular/**/*.tsx

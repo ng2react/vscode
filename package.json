@@ -145,12 +145,8 @@
         "pretest": "npm run test-compile && npm run lint",
         "test": "node ./out/test/runTest.js"
     },
-    "dependencies": {
-        "@ng2react/core": "^1.0.0",
-        "lodash": "^4.17.21",
-        "markdown-it": "^13.0.1"
-    },
     "devDependencies": {
+        "@ng2react/core": "^1.0.1-rc.0",
         "@types/glob": "^8.1.0",
         "@types/lodash": "^4.14.194",
         "@types/markdown-it": "^12.2.3",
@@ -163,6 +159,8 @@
         "esbuild": "^0.17.18",
         "eslint": "^8.34.0",
         "glob": "^8.1.0",
+        "lodash": "^4.17.21",
+        "markdown-it": "^13.0.1",
         "mocha": "^10.2.0",
         "prettier": "^2.8.8",
         "rimraf": "^5.0.0",

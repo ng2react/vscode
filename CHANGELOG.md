@@ -22,8 +22,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 -   Updated documentation
 -   Excluded unwanted files from package
 
-## [0.0.11] - 2023-05-08
+## [0.0.12] - 2023-05-08
 
 -   Fixed bug where scanning file system for files to convert might fail
 -   Fixed bug where sandboxMode was always on!
+-   Fixed bug where converson would fail if `ng2react.sourceRoot` was not set
 -   Added package bundling for smaller package size
