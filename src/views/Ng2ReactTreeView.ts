@@ -5,7 +5,7 @@ import { ConvertToReactArgs, Ng2React } from '../commands/CommandName';
 import findAllAngularFiles from '../lib/findAllAngularFiles';
 import { findExistingConversions } from '../lib/searchDocument';
 
-type TreeNode = { name: string, uri: vscode.Uri, type: 'react' | 'angular' | 'component' | 'file' | 'convert' };
+type TreeNode = { name: string; uri: vscode.Uri; type: 'react' | 'angular' | 'component' | 'file' | 'convert' };
 
 export default function createNg2ReactTreeView() {
     const onDidChangeTreeData = new vscode.EventEmitter<TreeNode | void>();
@@ -16,23 +16,25 @@ export default function createNg2ReactTreeView() {
                 return [];
             }
             if (!parent) {
-                return (await findAllAngularFiles()).map(({ uri, name }) => ({ uri, name, type: 'file' } satisfies TreeNode));
+                return (await findAllAngularFiles()).map(
+                    ({ uri, name }) => ({ uri, name, type: 'file' } satisfies TreeNode)
+                );
             }
             if (parent.type === 'file') {
                 const content = fs.readFileSync(parent.uri.fsPath, 'utf8');
-                return search(content, { file: parent.uri.fsPath })
-                    .flatMap(({ name }) => [
-                        ({ name: name, uri: parent.uri, type: 'component' } satisfies TreeNode),
-                        // ...findExistingConversions(parent.uri, name)
-                    ]);
+                return search(content, { file: parent.uri.fsPath }).flatMap(({ name }) => [
+                    { name: name, uri: parent.uri, type: 'component' } satisfies TreeNode,
+                    // ...findExistingConversions(parent.uri, name)
+                ]);
             }
             if (parent.type === 'component') {
                 // Assume this is an AngularJS file and find conversions
                 return [
                     { ...parent, type: 'convert' },
                     { ...parent, type: 'angular' },
-                    ...findExistingConversions(parent.uri, parent.name)
-                        .map(({ name, uri }) => ({ name, uri, type: 'react' } satisfies TreeNode))
+                    ...findExistingConversions(parent.uri, parent.name).map(
+                        ({ name, uri }) => ({ name, uri, type: 'react' } satisfies TreeNode)
+                    ),
                 ];
             }
             // Assume this is a React file
@@ -42,13 +44,13 @@ export default function createNg2ReactTreeView() {
             if (item.type === 'file') {
                 return {
                     label: item.uri.path.split('/').pop()!,
-                    collapsibleState: vscode.TreeItemCollapsibleState.Expanded
+                    collapsibleState: vscode.TreeItemCollapsibleState.Expanded,
                 };
             }
             if (item.type === 'component') {
                 return {
                     label: item.name,
-                    collapsibleState: vscode.TreeItemCollapsibleState.Expanded
+                    collapsibleState: vscode.TreeItemCollapsibleState.Expanded,
                 };
             }
             if (item.type === 'convert') {
@@ -61,7 +63,7 @@ export default function createNg2ReactTreeView() {
                         command: Ng2React.convertToReact,
                         arguments: [item.uri, item.name] satisfies ConvertToReactArgs,
                         tooltip: 'Convert this angular component to react',
-                    }
+                    },
                 };
             }
             return {
@@ -73,14 +75,13 @@ export default function createNg2ReactTreeView() {
                     command: 'vscode.open',
                     arguments: [item.uri],
                     tooltip: 'Open this file',
-                }
+                },
             };
-
         },
         onDidChangeTreeData: onDidChangeTreeData.event,
         refresh() {
             enabled = true;
             onDidChangeTreeData.fire();
-        }
+        },
     } satisfies vscode.TreeDataProvider<TreeNode> & { refresh(): void };
 }

@@ -1,4 +1,4 @@
-import { search } from "@ng2react/core";
+import { search } from '@ng2react/core';
 import * as fs from 'fs';
 import { startCase } from 'lodash';
 import * as vscode from 'vscode';
@@ -26,7 +26,7 @@ export default async function writeToFile(jsx: string, angularName: string, uri:
     const newFile = await vscode.workspace.openTextDocument(newFilePath);
     const newEditor = await vscode.window.showTextDocument(newFile);
     const newContent = jsx;
-    newEditor.edit(edit => {
+    newEditor.edit((edit) => {
         edit.replace(new vscode.Range(0, 0, newFile.lineCount, 0), newContent);
     });
 }

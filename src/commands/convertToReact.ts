@@ -1,6 +1,10 @@
 import * as vscode from 'vscode';
-import convertToReact from "../lib/angularToReact";
-export async function convertToReactCmd(filePath: vscode.Uri | undefined, componentName: string | undefined, context: vscode.ExtensionContext) {
+import convertToReact from '../lib/angularToReact';
+export async function convertToReactCmd(
+    filePath: vscode.Uri | undefined,
+    componentName: string | undefined,
+    context: vscode.ExtensionContext
+) {
     if (!(filePath && componentName)) {
         vscode.window.showErrorMessage('No component selected');
         return;
@@ -11,10 +15,7 @@ export async function convertToReactCmd(filePath: vscode.Uri | undefined, compon
     await vscode.window.showTextDocument(filePath);
 
     // Ask the user if they wish to proceed
-    const response = await vscode.window.showInformationMessage(
-        `Convert ${componentName} to React?`,
-        'Yes', 'No'
-    );
+    const response = await vscode.window.showInformationMessage(`Convert ${componentName} to React?`, 'Yes', 'No');
 
     if (response !== 'Yes') {
         return;
@@ -22,9 +23,9 @@ export async function convertToReactCmd(filePath: vscode.Uri | undefined, compon
     try {
         await convertToReact(filePath, componentName, context);
     } catch (e) {
-        vscode.window.showErrorMessage(
-            `Error converting ${componentName} in ${shortFileName}`,
-            { detail: (e as Error).message, modal: true }
-        );
+        vscode.window.showErrorMessage(`Error converting ${componentName} in ${shortFileName}`, {
+            detail: (e as Error).message,
+            modal: true,
+        });
     }
 }
