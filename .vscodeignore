@@ -10,3 +10,5 @@ vsc-extension-quickstart.md
 **/*.ts
 angular-examples/**
 out/test/**
+.githooks/**
+.github/**

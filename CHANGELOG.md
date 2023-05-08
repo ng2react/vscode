@@ -22,7 +22,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 -   Updated documentation
 -   Excluded unwanted files from package
 
-## [0.0.10] - 2023-05-08
+## [0.0.11] - 2023-05-08
 
--   Bugfix when scanning file system for files to convert
+-   Fixed bug where scanning file system for files to convert might fail
+-   Fixed bug where sandboxMode was always on!
 -   Added package bundling for smaller package size
