@@ -8,7 +8,7 @@ export const Ng2React = {
     refreshTreeView: 'ng2react.refreshTreeView',
 } as const;
 
-export type Ng2ReactCommand = typeof Ng2React[keyof typeof Ng2React];
+export type Ng2ReactCommand = (typeof Ng2React)[keyof typeof Ng2React];
 
 type ConvertToReactParams = Parameters<typeof convertToReactCmd>;
 export type ConvertToReactArgs = [vscode.Uri, string] & [ConvertToReactParams[0], ConvertToReactParams[1]];

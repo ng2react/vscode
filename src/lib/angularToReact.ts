@@ -1,10 +1,10 @@
-import { convert, search } from "@ng2react/core";
+import { convert, search } from '@ng2react/core';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import displayMarkdownResult from "./displayMarkdownResult";
-import writeToFile from "./writeToFile";
-import { getDummyResponse, isSandbox } from "./sandboxMode";
+import displayMarkdownResult from './displayMarkdownResult';
+import writeToFile from './writeToFile';
+import { getDummyResponse, isSandbox } from './sandboxMode';
 export type AngularComponent = ReturnType<typeof search>[0];
 let currentConversion = '';
 
@@ -23,20 +23,29 @@ export default async function convertToReact(uri: vscode.Uri, componentName: str
             } finally {
                 currentConversion = '';
             }
-        });
+        }
+    );
 
     results.forEach(({ markdown, jsx }, index) => {
-        displayMarkdownResult(markdown, index, componentName)
-            .webview.onDidReceiveMessage((message) => {
+        displayMarkdownResult(markdown, index, componentName).webview.onDidReceiveMessage(
+            (message) => {
                 if (message.command === 'writeToFile') {
                     writeToFile(jsx, componentName, uri);
                 }
-            }, undefined, context.subscriptions);
+            },
+            undefined,
+            context.subscriptions
+        );
     });
     return true;
 }
 
-async function doConversion(uri: vscode.Uri, componentName: string, progress: vscode.Progress<{ message?: string; increment?: number }>, cancellationToken: vscode.CancellationToken) {
+async function doConversion(
+    uri: vscode.Uri,
+    componentName: string,
+    progress: vscode.Progress<{ message?: string; increment?: number }>,
+    cancellationToken: vscode.CancellationToken
+) {
     if (isSandbox()) {
         return getDummyResponse(componentName);
     }
@@ -50,7 +59,8 @@ async function doConversion(uri: vscode.Uri, componentName: string, progress: vs
 
     const content = (await vscode.window.showTextDocument(uri)).document.getText();
     progress.report({ message: `Querying ${model}`, increment: 10 });
-    return convert(content, { // TODO: way to get updates from this
+    return convert(content, {
+        // TODO: way to get updates from this
         file: uri.fsPath,
         componentName,
         apiKey,

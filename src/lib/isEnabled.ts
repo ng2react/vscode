@@ -1,4 +1,4 @@
-import * as  vscode from 'vscode';
+import * as vscode from 'vscode';
 import * as fs from 'fs';
 import path = require('path');
 type IsEnabled = 'yes' | 'no' | 'auto';
@@ -22,8 +22,8 @@ function isAnglarProject() {
         return false;
     }
     try {
-        const {dependencies, peerDependencies, devDependencies} = JSON.parse(fs.readFileSync(packageJson, 'utf-8'));
-        const allDependencies = {...dependencies, ...peerDependencies, ...devDependencies};
+        const { dependencies, peerDependencies, devDependencies } = JSON.parse(fs.readFileSync(packageJson, 'utf-8'));
+        const allDependencies = { ...dependencies, ...peerDependencies, ...devDependencies };
         if ('angular' in allDependencies) {
             return true;
         }

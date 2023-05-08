@@ -1,19 +1,13 @@
-import { search } from "@ng2react/core";
-import * as MarkdownIt from 'markdown-it';
+import { search } from '@ng2react/core';
+import MarkdownIt from 'markdown-it';
 import * as vscode from 'vscode';
 export type AngularComponent = ReturnType<typeof search>[0];
 
 export default function displayMarkdownResult(markdown: string, index: number, componentName: string) {
-
-    const panel = vscode.window.createWebviewPanel(
-        `ng2react`,
-        `ng2react: ${componentName}`,
-        vscode.ViewColumn.Beside,
-        {
-            enableScripts: true,
-            retainContextWhenHidden: true
-        }
-    );
+    const panel = vscode.window.createWebviewPanel(`ng2react`, `ng2react: ${componentName}`, vscode.ViewColumn.Beside, {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+    });
 
     // Set the webview content to the rendered Markdown
     panel.webview.html = getHtml(`${componentName} - Option ${index + 1}`, markdown);
@@ -54,4 +48,3 @@ ${renderedMarkdown}
 </html>
   `;
 }
-
