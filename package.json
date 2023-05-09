@@ -78,6 +78,7 @@
             "title": "ng2react",
             "properties": {
                 "ng2react.enabled": {
+                    "order": 0,
                     "type": "string",
                     "default": "auto",
                     "enum": [
@@ -88,49 +89,72 @@
                     "description": "Enable ng2react. If 'auto' is selected, ng2react will only be enabled if an angularjs project is detected"
                 },
                 "ng2react.sandbox": {
+                    "order": 1,
                     "type": "boolean",
                     "default": "false",
                     "description": "Enable sandbox mode. This will disable all network requests and generate a dummy response. Useful for UI testing and debugging."
                 },
-                "ng2react.sourceRoot": {
-                    "type": "string",
-                    "default": "src",
-                    "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.\\-/]+)+$",
-                    "description": "Root of your angularjs source code, where all your angularjs components and templates are located"
-                },
                 "ng2react.openai.apiKey": {
+                    "order": 2,
                     "type": "string",
-                    "default": "",
                     "description": "API key for openai",
                     "scope": "application"
                 },
                 "ng2react.openai.model": {
+                    "order": 3,
                     "type": "string",
                     "default": "gpt-4",
                     "enum": [
                         "gpt-4",
-                        "gpt-3.5-turbo",
-                        "text-davinci-003",
-                        "text-davinci-002",
-                        "text-curie-001",
-                        "text-babbage-001",
-                        "text-ada-001"
+                        "gpt-3.5-turbo"
                     ],
                     "description": "OpenAI model to use. Currently only gpt modules are supported",
                     "scope": "application"
                 },
                 "ng2react.openai.orginisation": {
+                    "order": 4,
                     "type": "string",
-                    "default": "Optional orginisation ID to use with openai",
+                    "description": "Optional orginisation ID to use with openai",
                     "scope": "application"
                 },
                 "ng2react.openai.temperature": {
+                    "order": 5,
                     "type": "number",
                     "default": 0.2,
                     "minimum": 0,
                     "maximum": 2,
                     "description": "Temperature to use with openai",
                     "scope": "application"
+                },
+                "ng2react.source.angularRoot": {
+                    "type": "string",
+                    "default": "src",
+                    "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.\\-/]+)+$",
+                    "description": "Root of your angularjs source code, where all your angularjs components and templates are located"
+                },
+                "ng2react.source.reactRoot": {
+                    "type": "string",
+                    "default": "src",
+                    "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.\\-/]+)+$",
+                    "description": "Root of your React source code, where generated React files will be saved"
+                },
+                "ng2react.source.testRoot": {
+                    "type": "string",
+                    "default": "src",
+                    "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.\\-/]+)+$",
+                    "description": "Root of your React test code, where generated React test files will be saved"
+                },
+                "ng2react.source.testSuffix": {
+                    "type": "string",
+                    "default": ".test",
+                    "enum": [
+                        ".test",
+                        ".spec"
+                    ],
+                    "description": "Suffix for generated test files (e.g. MyComponent.test.jsx)",
+                    "required": [
+                        "ng2react.source.testRoot"
+                    ]
                 }
             }
         }

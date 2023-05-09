@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import path = require('path');
-type IsEnabled = 'yes' | 'no' | 'auto';
+import Config from '../Config';
 
 export default function isEnabled() {
-    const enabled = vscode.workspace.getConfiguration('ng2react').get('enabled') as IsEnabled;
+    const enabled = Config.get('enabled');
     if (enabled !== 'auto') {
         return enabled === 'yes';
     }

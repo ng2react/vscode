@@ -1,6 +1,7 @@
 import { search } from '@ng2react/core';
 import * as fs from 'fs';
 import * as vscode from 'vscode';
+import Config from '../Config';
 import { ConvertToReactArgs, Ng2React } from '../commands/CommandName';
 import findAllAngularFiles from '../lib/findAllAngularFiles';
 import { findExistingConversions } from '../lib/searchDocument';
@@ -9,7 +10,7 @@ type TreeNode = { name: string; uri: vscode.Uri; type: 'react' | 'angular' | 'co
 
 export default function createNg2ReactTreeView() {
     const onDidChangeTreeData = new vscode.EventEmitter<TreeNode | void>();
-    let enabled = vscode.workspace.getConfiguration('ng2react').get('enabled') === 'yes';
+    let enabled = Config.get('enabled') === 'yes';
     return {
         getChildren: async (parent?: TreeNode) => {
             if (!enabled) {
@@ -24,7 +25,6 @@ export default function createNg2ReactTreeView() {
                 const content = fs.readFileSync(parent.uri.fsPath, 'utf8');
                 return search(content, { file: parent.uri.fsPath }).flatMap(({ name }) => [
                     { name: name, uri: parent.uri, type: 'component' } satisfies TreeNode,
-                    // ...findExistingConversions(parent.uri, name)
                 ]);
             }
             if (parent.type === 'component') {
