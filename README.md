@@ -22,7 +22,10 @@ This extension contributes the following settings:
 -   `ng2react.openai.model`: The OpenAI engine to use for generating React components from AngularJS components. Defaults to `gpt-4`.
 -   `ng2react.openai.temperature`: The OpenAI temperature to use for generating React components from AngularJS components. Defaults to `0.2`.
 -   `ng2react.openai.orginization`: An optional organization ID assiciated with your OpenAI account.
--   `ng2react.sourceRoot`: The source root of your AngularJS project. Defaults to `src`.
+-   `ng2react.angularRoot`: The source root of your AngularJS code. Defaults to `src`.
+-   `ng2react.reactRoot`: The source root of your AngularJS code. Defaults to `src`.
+-   `ng2react.testRoot`: The source root where React unit tests should be generated
+-   `ng2react.testFileSuffix`: Default test file suffix. Defaults to `.test.tsx`.
 -   `ng2react.enabled`: Whether or not the extension is enabled. Defaults to `auto`.
 -   `ng2react.sandboxMode`: Whether or not to run the extension in sandbox mode. Defaults to `false`.
 
@@ -37,10 +40,10 @@ This is an early alpha release of the extension. There are many known issues and
 
 Users appreciate release notes as you update your extension.
 
-### 0.0.2
+### 0.1.0
 
--   Added `ng2react.sandbox` setting to enable testing without an OpenAI API key.
--   Prevented unchecked overwriting of files.
+-   Replaced `ng2react.sourceRoot` property with `ng2react.angularRoot` and `ng2react.reactRoot`
+-   Fixed default entry for `ng2react.openai.orginization`
 
 ## Wrapping React Components
 

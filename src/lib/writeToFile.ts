@@ -2,14 +2,11 @@ import { search } from '@ng2react/core';
 import * as fs from 'fs';
 import { startCase } from 'lodash';
 import * as vscode from 'vscode';
+import { getSourceRoot } from '../Config';
 export type AngularComponent = ReturnType<typeof search>[0];
 
 export default async function writeToFile(jsx: string, angularName: string, uri: vscode.Uri) {
-    const fileName = uri.path;
-    const reactName = toPascalCase(angularName);
-    const fileExtension = uri.path.endsWith('.ts') ? '.tsx' : '.jsx';
-    const newFileName = reactName + fileExtension;
-    const newFilePath = fileName.replace(/[^\/]+$/, newFileName);
+    const { newFileName, newFilePath } = getNewFilePath(uri, angularName);
 
     if (fs.existsSync(newFilePath)) {
         const answer = await vscode.window.showWarningMessage(
@@ -33,4 +30,23 @@ export default async function writeToFile(jsx: string, angularName: string, uri:
 
 export function toPascalCase(name: string) {
     return startCase(name).replace(/ /g, '');
+}
+
+function getNewFilePath(sourceFile: vscode.Uri, angularName: string) {
+    const reactName = toPascalCase(angularName);
+    const fileExtension = sourceFile.path.endsWith('.ts') ? '.tsx' : '.jsx';
+    const newFileName = reactName + fileExtension;
+
+    const angularRoot = getSourceRoot('angular');
+    const reactRoot = getSourceRoot('react');
+
+    const newFilePath = sourceFile.path.replace(/[^\/]+$/, newFileName);
+
+    if (!(angularRoot && reactRoot) || angularRoot === reactRoot) {
+        return { newFileName, newFilePath };
+    }
+    if (!newFilePath.includes(angularRoot)) {
+        return { newFileName, newFilePath };
+    }
+    return { newFileName, newFilePath: newFilePath.replace(angularRoot, reactRoot) };
 }

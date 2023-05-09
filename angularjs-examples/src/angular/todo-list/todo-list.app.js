@@ -1,7 +1,7 @@
 import angular from 'angular';
 import './todo-list.component.js';
 import './todo-list.service.js';
-import TodoList from '../../react/todo-list/todo-list.jsx';
+import TodoList from '../../react/todo-list/TodoList.jsx';
 import { angularize } from '@ng2react/support';
 const app = angular
   .module('todoListApp', ['todoList', 'todoListService'])

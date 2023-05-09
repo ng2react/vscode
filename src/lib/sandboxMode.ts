@@ -1,9 +1,9 @@
 import type { convert } from '@ng2react/core';
-import * as vscode from 'vscode';
+import Config from '../Config';
 import { toPascalCase } from './writeToFile';
 
 export function isSandbox() {
-    return !!vscode.workspace.getConfiguration('ng2react').get<boolean>('sandboxMode');
+    return Config.get('sandbox');
 }
 
 export function getDummyResponse(componentName: string) {

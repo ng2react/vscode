@@ -2,9 +2,10 @@ import { convert, search } from '@ng2react/core';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import Config from '../Config';
 import displayMarkdownResult from './displayMarkdownResult';
-import writeToFile from './writeToFile';
 import { getDummyResponse, isSandbox } from './sandboxMode';
+import writeToFile from './writeToFile';
 export type AngularComponent = ReturnType<typeof search>[0];
 let currentConversion = '';
 
@@ -46,10 +47,11 @@ async function doConversion(
     progress: vscode.Progress<{ message?: string; increment?: number }>,
     cancellationToken: vscode.CancellationToken
 ) {
+    const { apiKey, model, organisation, temperature } = Config.get('openai');
+
     if (isSandbox()) {
         return getDummyResponse(componentName);
     }
-    const { apiKey, model, organisation, temperature } = vscode.workspace.getConfiguration('ng2react.openai');
     if (typeof apiKey !== 'string') {
         throw Error('Conversion failed: OpenAI API key is not set');
     }
@@ -72,8 +74,8 @@ async function doConversion(
 }
 
 function getSourceRout() {
-    const { sourceRoot } = vscode.workspace.getConfiguration('ng2react');
-    if (sourceRoot || typeof sourceRoot !== 'string') {
+    const sourceRoot = Config.get('source.angularRoot');
+    if (!sourceRoot) {
         return undefined;
     }
     const absoluteSourceRoot = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, sourceRoot);

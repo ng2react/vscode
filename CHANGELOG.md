@@ -28,3 +28,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 -   Fixed bug where sandboxMode was always on!
 -   Fixed bug where converson would fail if `ng2react.sourceRoot` was not set
 -   Added package bundling for smaller package size
+
+## [0.1.0] - 2023-05-09
+
+-   Replaced `ng2react.sourceRoot` property with `ng2react.angularRoot` and `ng2react.reactRoot`
+-   Fixed default entry for `ng2react.openai.orginization`

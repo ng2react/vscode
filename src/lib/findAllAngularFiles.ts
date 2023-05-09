@@ -2,9 +2,10 @@ import { search } from '@ng2react/core';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { getSourceRoot } from '../Config';
 
 export default async function findAllAngularFiles() {
-    const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+    const workspaceRoot = getSourceRoot('angular') ?? vscode.workspace.workspaceFolders?.[0].uri.fsPath;
     if (!workspaceRoot) {
         return [];
     }
