@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "outDir": "out",
     "rootDir": "src",
@@ -8,6 +9,7 @@
     "module": "NodeNext",
     "target": "ES2021",
     "moduleResolution": "bundler",
-    "allowArbitraryExtensions": true
+    "allowArbitraryExtensions": true,
+    "isolatedModules": true
   }
 }

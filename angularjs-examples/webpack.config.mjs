@@ -13,18 +13,35 @@ export default {
   },
   module: {
     rules: [
+      // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: { loader: 'babel-loader' },
+        type: 'javascript/auto',
+        test: /\.(t|j)sx?$/,
+        loader: 'ts-loader',
       },
-      // {
-      //     test: /\.{js,ts,jsx,tsx}$/,
-      //     exclude: /node_modules/,
-      //     use: {
-      //         loader: 'ts-loader',
-      //     }
-      // },
+      {
+        test: /\.(le|c)ss$/i,
+        use: [
+          {
+            loader: 'style-loader', // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'less-loader', // compiles Less to CSS
+          },
+        ],
+      },
+      {
+        test: /\.tpl\.html$/i,
+        use: {
+          loader: 'raw-loader',
+          options: {
+            esModule: false,
+          },
+        },
+      },
       {
         test: /\.html$/,
         use: {
