@@ -7,9 +7,9 @@ import * as angular from 'angular';
 import { isNil } from 'lodash';
 
 export enum TooltipPosition {
-  Left = 'left',
-  BottomLeft = 'bottom-left',
-  BottomRight = 'bottom-right',
+  left = 'left',
+  bottomLeft = 'bottom-left',
+  bottomRight = 'bottom-right',
 }
 
 class ToggleButtonCtrl implements angular.IController {
@@ -30,11 +30,11 @@ class ToggleButtonCtrl implements angular.IController {
 
   public getTooltipPositionClass() {
     switch (this.tooltipPosition) {
-      case TooltipPosition.Left:
+      case TooltipPosition.left:
         return 'gxmUiTooltip__left';
-      case TooltipPosition.BottomLeft:
+      case TooltipPosition.bottomLeft:
         return 'gxmUiTooltip__bottomLeft';
-      case TooltipPosition.BottomRight:
+      case TooltipPosition.bottomRight:
         return 'gxmUiTooltip__bottomRight';
       default:
         return 'gxmUiTooltip__right';
