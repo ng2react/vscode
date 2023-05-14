@@ -1,0 +1,7 @@
+{
+  "ng2react.enabled": "yes",
+  "ng2react.sandbox": false,
+  "ng2react.source.angularRoot": "src/angular",
+  "ng2react.source.reactRoot": "src/react",
+  "ng2react.source.testRoot": "src/test"
+}

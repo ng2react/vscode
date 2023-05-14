@@ -1,11 +1,13 @@
-import angular from 'angular';
+import 'angular';
+import 'angular-route';
+import angular, { route } from 'angular';
 import './todo-list/todo-list.app';
-import './app.css';
+import './toggle-button/toggleButton.app';
+import './app.less';
 
 angular
   .module('app', ['ngRoute', 'todoListApp', 'toggleButtonApp'])
-  .controller('AppCtrl', function ($log, $scope) {})
-  .config(function config($routeProvider) {
+  .config(($routeProvider: route.IRouteProvider) => {
     $routeProvider
       .when('/todo', {
         template: '<todo-list-app></todo-list-app>',
@@ -13,5 +15,7 @@ angular
       .when('/toggleBtn', {
         template: '<toggle-button-app></toggle-button-app>',
       })
-      .otherwise('/todo');
+      .otherwise({
+        redirectTo: '/todo',
+      });
   });

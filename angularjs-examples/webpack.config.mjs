@@ -5,7 +5,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 export default {
   mode: 'development',
   entry: {
-    app: path.resolve(__dirname, 'src/angular/app.js'),
+    app: path.resolve(__dirname, 'src/angular/app.ts'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -16,11 +16,13 @@ export default {
       // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
       {
         type: 'javascript/auto',
+        include: path.resolve(__dirname, 'src'),
         test: /\.(t|j)sx?$/,
         loader: 'ts-loader',
       },
       {
         test: /\.(le|c)ss$/i,
+        exclude: /node_modules/,
         use: [
           {
             loader: 'style-loader', // creates style nodes from JS strings
@@ -41,17 +43,6 @@ export default {
             esModule: false,
           },
         },
-      },
-      {
-        test: /\.html$/,
-        use: {
-          loader: 'raw-loader',
-        },
-      },
-      {
-        test: /\.css$/i,
-        include: path.resolve(__dirname, 'src'),
-        use: ['style-loader', 'css-loader'],
       },
     ],
   },

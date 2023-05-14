@@ -5,7 +5,13 @@
 
 import * as angular from 'angular';
 import { isNil } from 'lodash';
-import { TooltipPosition } from '../../lib/model/TooltipPosition';
+
+export enum TooltipPosition {
+  Left = 'left',
+  BottomLeft = 'bottom-left',
+  BottomRight = 'bottom-right',
+}
+
 class ToggleButtonCtrl implements angular.IController {
   public readonly firstState!: string;
   public readonly firstStateLabel!: string;
@@ -43,7 +49,7 @@ class ToggleButtonCtrl implements angular.IController {
   }
 }
 
-angular.module('gxmToggleButton', []).component('gxmToggleButton', {
+angular.module('toggleButton', []).component('toggleButton', {
   require: {},
   bindings: {
     firstState: '@',
@@ -56,5 +62,5 @@ angular.module('gxmToggleButton', []).component('gxmToggleButton', {
     tooltipPosition: '@?',
   },
   controller: ToggleButtonCtrl,
-  templateUrl: 'gxm-web-ui/gxmToggleButton.tpl.html',
+  templateUrl: 'templates/toggle-button/toggleButton.tpl.html',
 });

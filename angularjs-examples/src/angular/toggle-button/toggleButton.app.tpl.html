@@ -1,4 +1,24 @@
+<div>The Current State is: {{state.currentState}}</div>
 <div class="ng2react__sideBySide">
-<todo-list items="items"></todo-list>
-<todo-list-react items="items" set-items="setItems(items)"></todo-list-react>
+ 
+    <toggle-button
+        first-state="{{state.firstState}}"
+        first-state-label="{{state.firstStateLabel}}"
+        first-state-tooltip="{{state.firstStateTooltip}}"
+        second-state="{{state.secondState}}"
+        second-state-label="{{state.secondStateLabel}}"
+        second-state-tooltip="{{state.secondStateTooltip}}"
+        current-state="state.currentState"
+    ></toggle-button>
+
+    <toggle-button-react
+        first-state="{{state.firstState}}"
+        first-state-label="{{state.firstStateLabel}}"
+        first-state-tooltip="{{state.firstStateTooltip}}"
+        second-state="{{state.secondState}}"
+        second-state-label="{{state.secondStateLabel}}"
+        second-state-tooltip="{{state.secondStateTooltip}}"
+        current-state="state.currentState"
+        on-current-state-change="onCurrentStateChange(currentState)"
+    ></toggle-button-react>
 </div>
