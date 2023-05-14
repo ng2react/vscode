@@ -1,9 +1,9 @@
+import { angularize } from '@ng2react/support';
 import angular from 'angular';
+import ServiceInjectionExample from '../../react/service-injection/ServiceInjectionExample';
+import './myService';
 import './serviceInjectionExample.component';
 import './serviceInjectionExample.less';
-import './myService';
-import { angularize } from '@ng2react/support';
-
 const app = angular
   .module('serviceInjectionExampleApp', [
     'serviceInjectionExample',
@@ -16,7 +16,7 @@ const app = angular
     templateUrl: 'templates/service-injection/serviceInjectionApp.tpl.html',
   });
 
-angularize(() => <></>, {
+angularize(ServiceInjectionExample, {
   name: 'serviceInjectionExampleReact',
   module: app,
 });

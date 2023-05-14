@@ -29,13 +29,14 @@ export default async function convertToReact(uri: vscode.Uri, componentName: str
 
     results.forEach(({ markdown, jsx }, index) => {
         displayMarkdownResult(markdown, index, componentName).webview.onDidReceiveMessage(
-            (message) => {
+            (message: { command: string }) => {
                 if (message.command === 'writeJsx') {
-                    writeJsx(jsx, componentName, uri);
+                    return writeJsx(jsx, componentName, uri);
                 }
                 if (message.command === 'writeMarkdown') {
-                    writeMarkdown(markdown, componentName, uri);
+                    return writeMarkdown(markdown, componentName, uri);
                 }
+                return undefined;
             },
             undefined,
             context.subscriptions

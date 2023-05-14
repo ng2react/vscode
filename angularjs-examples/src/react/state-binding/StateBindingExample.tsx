@@ -33,6 +33,14 @@ const StateBindingExample: React.FC<StateBindingExampleProps> = ({
     initialOptionalStringBinding
   );
 
+  const [changeCounter, setChangeCounter] = useState({
+    oneWayBinding: 0,
+    stringBinding: 0,
+    optionalOneWayBinding: 0,
+    optionalStringBinding: 0,
+    readOnlyOneWayBinding: 0,
+  });
+
   const handleTwoWayBindingChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -41,19 +49,42 @@ const StateBindingExample: React.FC<StateBindingExampleProps> = ({
 
   useEffect(() => {
     setOneWayBinding(initialOneWayBinding);
+    setChangeCounter({
+      ...changeCounter,
+      oneWayBinding: changeCounter.oneWayBinding + 1,
+    });
   }, [initialOneWayBinding]);
 
   useEffect(() => {
     setOptionalOneWayBinding(initialOptionalOneWayBinding);
+    setChangeCounter({
+      ...changeCounter,
+      optionalOneWayBinding: changeCounter.optionalOneWayBinding + 1,
+    });
   }, [initialOptionalOneWayBinding]);
 
   useEffect(() => {
     setStringBinding(initialStringBinding);
+    setChangeCounter({
+      ...changeCounter,
+      stringBinding: changeCounter.stringBinding + 1,
+    });
   }, [initialStringBinding]);
 
   useEffect(() => {
     setOptionalStringBinding(initialOptionalStringBinding);
+    setChangeCounter({
+      ...changeCounter,
+      optionalStringBinding: changeCounter.optionalStringBinding + 1,
+    });
   }, [initialOptionalStringBinding]);
+
+  useEffect(() => {
+    setChangeCounter({
+      ...changeCounter,
+      readOnlyOneWayBinding: changeCounter.readOnlyOneWayBinding + 1,
+    });
+  }, [readOnlyOneWayBinding]);
 
   const handleOptionalTwoWayBindingChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -126,6 +157,12 @@ const StateBindingExample: React.FC<StateBindingExampleProps> = ({
         <label>
           Readonly 1-Way Binding{' '}
           <input type="checkbox" checked={readOnlyOneWayBinding} readOnly />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          onChanges Counter <pre>{JSON.stringify(changeCounter, null, 2)}</pre>
         </label>
       </div>
     </div>

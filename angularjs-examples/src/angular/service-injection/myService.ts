@@ -1,4 +1,5 @@
-import angular from 'angular';
+import angular, { IQService, IRootScopeService } from 'angular';
+import { resolve } from 'path';
 
 export interface MyService {
   readonly message: string;
@@ -6,7 +7,7 @@ export interface MyService {
   getMessage: () => Promise<string>;
 }
 
-angular.module('myService', []).factory('myService', () => {
+angular.module('myService', []).factory('myService', ($q: IQService) => {
   // Simulates a service that can be injected into a component
   // with async methods.
   let message = 'Hello. world!';
@@ -15,8 +16,11 @@ angular.module('myService', []).factory('myService', () => {
       return message;
     },
     setMessage: async (msg: string) => {
-      message = msg;
+      return $q((resolve) => {
+        message = msg;
+        resolve();
+      });
     },
-    getMessage: async () => message,
+    getMessage: async () => $q.resolve(message),
   } satisfies MyService;
 });
