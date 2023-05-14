@@ -1,0 +1,43 @@
+<div class="stateBox">The Current State is:
+    <div>
+        <label>2-Way Binding <input ng-model="state.twoWayBinding" type="checkbox" /></label>
+    </div>
+    <div>
+        <label>1-Way Binding <input ng-model="state.oneWayBinding" type="checkbox" /></label>
+    </div>
+    <div>
+        <label>String Binding <input ng-model="state.stringBinding" /></label>
+    </div>
+
+    <div>
+        <label>2-Way Binding (optional)<input ng-model="state.optionalTwoWayBinding" type="checkbox" /></label>
+    </div>
+    <div>
+        <label>1-Way Binding (optional)<input ng-model="state.optionalOneWayBinding" type="checkbox" /></label>
+    </div>
+    <div>
+        <label>String Binding (optional)<input ng-model="state.optionalStringBinding" /></label>
+    </div>
+
+    <div>
+        <label>Readonly 1-Way Binding <input ng-model="state.readOnlyOneWayBinding" type="checkbox" /></label>
+    </div>
+</div>
+<div class="ng2react__sideBySide">
+
+    <state-binding-example one-way-binding="state.oneWayBinding" two-way-binding="state.twoWayBinding"
+        string-binding="{{state.stringBinding}}" optional-one-way-binding="state.optionalOneWayBinding"
+        optional-two-way-binding="state.optionalTwoWayBinding"
+        optional-string-binding="{{state.optionalStringBinding}}"
+        read-only-one-way-binding="state.readOnlyOneWayBinding"
+        ></state-binding-example>
+
+    <state-binding-example-react one-way-binding="state.oneWayBinding" two-way-binding="state.twoWayBinding"
+        string-binding="{{state.stringBinding}}" optional-one-way-binding="state.optionalOneWayBinding"
+        optional-two-way-binding="state.optionalTwoWayBinding"
+        optional-string-binding="{{state.optionalStringBinding}}"
+        on-two-way-binding-change="onTwoWayBindingChange"
+        on-optional-two-way-binding-change="onOptionalTwoWayBindingChange"
+        read-only-one-way-binding="state.readOnlyOneWayBinding"
+        ></state-binding-example-react>
+</div>

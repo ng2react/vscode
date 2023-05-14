@@ -2,6 +2,6 @@
 /out
 /dist
 /build
-/.vscode
 /src/angular/**/*.jsx
 /src/angular/**/*.tsx
+/.idea

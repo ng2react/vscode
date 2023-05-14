@@ -1,0 +1,41 @@
+.toggle-button {
+  display: flex;
+  padding: 0.5vw;
+
+  &__label {
+    padding: 0;
+    align-self: center;
+
+    &--fade {
+      opacity: 0.5;
+    }
+  }
+
+  &__switch {
+    display: flex;
+    align-items: center;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    width: 3.6vw;
+    height: 2.4vw;
+    border-radius: 26px;
+    background-color: lightgreen;
+
+    > span {
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+      transform: rotate(0deg);
+      color: black;
+      margin-left: 0.1vw;
+    }
+
+    &--toggleState {
+      margin-left: 1.4vw !important;
+      transform: rotate(90deg) !important;
+    }
+  }
+
+  .fa {
+    font-size: 2.5vw;
+  }
+}

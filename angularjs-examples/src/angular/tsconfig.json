@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.generic.json",
+  "compilerOptions": {
+    "jsx": "react"
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "references": [
+    {
+      "path": "../react"
+    }
+  ]
+}

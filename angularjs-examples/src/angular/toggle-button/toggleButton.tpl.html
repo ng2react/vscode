@@ -1,0 +1,13 @@
+<div class="toggle-button" ng-click="$ctrl.toggle()">
+    <p id="toggle-button__firstState" class="toggle-button__label" ng-class="{'toggle-button__label--fade': $ctrl.currentState === $ctrl.secondState}">
+        {{$ctrl.firstStateLabel}}
+    </p>
+    <div class="toggle-button__switch"
+         ng-class="$ctrl.getTooltipPositionClass()"
+         my-tooltip="{{$ctrl.currentState === $ctrl.firstState ? $ctrl.firstStateTooltip : $ctrl.secondStateTooltip}}">
+      <span ng-class="{'toggle-button__switch--toggleState': $ctrl.currentState === $ctrl.secondState}" class="fa fa-plus-circle"></span>
+    </div>
+    <p id="toggle-button__secondState" class="toggle-button__label" ng-class="{'toggle-button__label--fade': $ctrl.currentState === $ctrl.firstState}">
+        {{$ctrl.secondStateLabel}}
+    </p>
+</div>
