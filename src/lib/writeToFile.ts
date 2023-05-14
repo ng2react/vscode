@@ -1,16 +1,28 @@
 import { search } from '@ng2react/core';
 import * as fs from 'fs';
 import { startCase } from 'lodash';
+import path from 'path';
 import * as vscode from 'vscode';
 import { getSourceRoot } from '../Config';
 export type AngularComponent = ReturnType<typeof search>[0];
 
-export default async function writeToFile(jsx: string, angularName: string, uri: vscode.Uri) {
-    const { newFileName, newFilePath } = getNewFilePath(uri, angularName);
+export function writeJsx(jsx: string, angularName: string, uri: vscode.Uri) {
+    const { newFilePath } = getNewFilePath(uri, angularName);
+    const newUri = vscode.Uri.file(newFilePath);
+    return writeToFile(newUri, jsx);
+}
 
-    if (fs.existsSync(newFilePath)) {
+export function writeMarkdown(markdown: string, angularName: string, uri: vscode.Uri) {
+    const { newFilePath } = getNewFilePath(uri, angularName);
+    const newUri = vscode.Uri.file(newFilePath + '.md');
+    return writeToFile(newUri, markdown);
+}
+
+export default async function writeToFile(uri: vscode.Uri, content: string) {
+    const filename = uri.path.split('/').pop();
+    if (fs.existsSync(uri.fsPath)) {
         const answer = await vscode.window.showWarningMessage(
-            `File ${newFileName} already exists. Overwrite?`,
+            `File ${filename} already exists. Overwrite?`,
             'Yes',
             'No'
         );
@@ -19,12 +31,18 @@ export default async function writeToFile(jsx: string, angularName: string, uri:
         }
     }
 
-    fs.writeFileSync(newFilePath, '', 'utf8');
-    const newFile = await vscode.workspace.openTextDocument(newFilePath);
+    // Create dir if it doesn't exist
+    const dir = path.resolve(uri.path.split('/').slice(0, -1).join('/'));
+    if (!fs.existsSync(dir)) {
+        console.log('Creating dir', dir);
+        fs.mkdirSync(dir, { recursive: true });
+    }
+
+    fs.writeFileSync(uri.fsPath, '', 'utf8');
+    const newFile = await vscode.workspace.openTextDocument(uri);
     const newEditor = await vscode.window.showTextDocument(newFile);
-    const newContent = jsx;
     newEditor.edit((edit) => {
-        edit.replace(new vscode.Range(0, 0, newFile.lineCount, 0), newContent);
+        edit.replace(new vscode.Range(0, 0, newFile.lineCount, 0), content);
     });
 }
 

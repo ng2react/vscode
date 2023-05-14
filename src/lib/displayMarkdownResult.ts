@@ -28,7 +28,8 @@ function getHtml(title: string, markdown: string) {
 <title>AngularJS to React Conversion</title>
 </head>
 <body>
-<button class="write-to-file-button">Write to file</button>
+<button class="write-jsx-button">Save as JSX</button>
+<button class="write-markdown-button">Save as Markdown</button>
 <h1>${title}</h1>
 <article class="markdown-body">
 ${renderedMarkdown}
@@ -37,9 +38,15 @@ ${renderedMarkdown}
 <script>
 (() => {
     const vscode = acquireVsCodeApi();
-    for (const btn of document.querySelectorAll('.write-to-file-button')) {
+    for (const btn of document.querySelectorAll('.write-jsx-button')) {
         btn.addEventListener('click', () => vscode.postMessage({
-            command: 'writeToFile'
+            command: 'writeJsx'
+        }));
+    }
+
+    for (const btn of document.querySelectorAll('.write-markdown-button')) {
+        btn.addEventListener('click', () => vscode.postMessage({
+            command: 'writeMarkdown'
         }));
     }
 })();

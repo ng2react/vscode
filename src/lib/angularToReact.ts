@@ -5,7 +5,7 @@ import * as vscode from 'vscode';
 import Config from '../Config';
 import displayMarkdownResult from './displayMarkdownResult';
 import { getDummyResponse, isSandbox } from './sandboxMode';
-import writeToFile from './writeToFile';
+import { writeJsx, writeMarkdown } from './writeToFile';
 export type AngularComponent = ReturnType<typeof search>[0];
 let currentConversion = '';
 
@@ -30,8 +30,11 @@ export default async function convertToReact(uri: vscode.Uri, componentName: str
     results.forEach(({ markdown, jsx }, index) => {
         displayMarkdownResult(markdown, index, componentName).webview.onDidReceiveMessage(
             (message) => {
-                if (message.command === 'writeToFile') {
-                    writeToFile(jsx, componentName, uri);
+                if (message.command === 'writeJsx') {
+                    writeJsx(jsx, componentName, uri);
+                }
+                if (message.command === 'writeMarkdown') {
+                    writeMarkdown(markdown, componentName, uri);
                 }
             },
             undefined,
