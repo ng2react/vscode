@@ -17,12 +17,6 @@ const app = angular
         firstStateTooltip: 'First state',
         secondStateTooltip: 'Second state',
       };
-
-      $scope.onCurrentStateChange = function (newState) {
-        $scope.$evalAsync(() => {
-          $scope.state.currentState = newState;
-        });
-      };
     },
     templateUrl: 'templates/toggle-button/toggleButton.app.tpl.html',
   });
@@ -35,10 +29,9 @@ angularize(ToggleButton, {
     firstStateLabel: '@',
     secondState: '@',
     secondStateLabel: '@',
-    currentState: '=',
+    currentState: ['=', 'onCurrentStateChange'],
     firstStateTooltip: '@',
     secondStateTooltip: '@',
     tooltipPosition: '@?',
-    onCurrentStateChange: '&',
   },
 });

@@ -4,10 +4,11 @@ import ServiceInjectionExample from '../../react/service-injection/ServiceInject
 import './myService';
 import './serviceInjectionExample.component';
 import './serviceInjectionExample.less';
-const app = angular
+angular
   .module('serviceInjectionExampleApp', [
     'serviceInjectionExample',
     'myService',
+    'serviceInjectionExampleReact',
   ])
   .component('serviceInjectionExampleApp', {
     controller: function ($scope, myService) {
@@ -18,5 +19,4 @@ const app = angular
 
 angularize(ServiceInjectionExample, {
   name: 'serviceInjectionExampleReact',
-  module: app,
 });
