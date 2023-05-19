@@ -42,12 +42,12 @@ const TodoList = ({ items, setItems }) => {
       items.push(newItem);
     }
     submitEvent.target.reset();
-    setItems({ items });
+    setItems(items);
   }
 
   function onDeleteItem(index) {
     items.splice(index, 1);
-    setItems({ items });
+    setItems(items);
   }
 };
 

@@ -13,7 +13,7 @@ interface StateBindingExampleProps {
   readonly readOnlyOneWayBinding: boolean;
 }
 
-const StateBindingExample: React.FC<StateBindingExampleProps> = ({
+const StateBindingExample = ({
   twoWayBinding,
   onTwoWayBindingChange,
   oneWayBinding: initialOneWayBinding,
@@ -23,7 +23,7 @@ const StateBindingExample: React.FC<StateBindingExampleProps> = ({
   onOptionalTwoWayBindingChange,
   optionalStringBinding: initialOptionalStringBinding,
   readOnlyOneWayBinding,
-}) => {
+}: StateBindingExampleProps) => {
   const [oneWayBinding, setOneWayBinding] = useState(initialOneWayBinding);
   const [optionalOneWayBinding, setOptionalOneWayBinding] = useState(
     initialOptionalOneWayBinding

@@ -4,8 +4,11 @@ import './stateBindingExample.less';
 import { angularize } from '@ng2react/support';
 import StateBindingExample from '../../react/state-binding/StateBindingExample';
 
-const app = angular
-  .module('stateBindingExampleApp', ['stateBindingExample'])
+angular
+  .module('stateBindingExampleApp', [
+    'stateBindingExample',
+    'stateBindingExampleReact',
+  ])
   .component('stateBindingExampleApp', {
     controller: function ($scope) {
       $scope.state = {
@@ -14,35 +17,19 @@ const app = angular
         stringBinding: 'Hello, World!',
         readOnlyOneWayBinding: true,
       };
-
-      $scope.onTwoWayBindingChange = (value) => {
-        $scope.$evalAsync(() => {
-          $scope.state.twoWayBinding = value;
-        });
-      };
-
-      $scope.onOptionalTwoWayBindingChange = (value) => {
-        $scope.$evalAsync(() => {
-          $scope.state.optionalTwoWayBinding = value;
-        });
-      };
     },
     templateUrl: 'templates/state-binding/stateBindingExample.app.tpl.html',
   });
 
 angularize(StateBindingExample, {
-  module: app,
   name: 'stateBindingExampleReact',
   bindings: {
-    twoWayBinding: '=',
+    twoWayBinding: ['=', 'onTwoWayBindingChange'],
     oneWayBinding: '<',
     stringBinding: '@',
     optionalOneWayBinding: '<?',
-    optionalTwoWayBinding: '=?',
+    optionalTwoWayBinding: ['=?', 'onOptionalTwoWayBindingChange'],
     optionalStringBinding: '@?',
     readOnlyOneWayBinding: '<',
-
-    onTwoWayBindingChange: '<',
-    onOptionalTwoWayBindingChange: '<?',
   },
 });

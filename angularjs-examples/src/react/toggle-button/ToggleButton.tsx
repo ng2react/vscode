@@ -9,7 +9,7 @@ type Props = {
   firstStateTooltip: string;
   secondStateTooltip: string;
   tooltipPosition?: string;
-  onCurrentStateChange(state: { currentState: string }): void;
+  onCurrentStateChange(state: string): void;
 };
 
 const ToggleButton = ({
@@ -24,9 +24,9 @@ const ToggleButton = ({
   tooltipPosition = '',
 }: Props) => {
   const toggle = () => {
-    onCurrentStateChange({
-      currentState: currentState === firstState ? secondState : firstState,
-    });
+    onCurrentStateChange(
+      currentState === firstState ? secondState : firstState
+    );
   };
 
   const getTooltipPositionClass = () => {

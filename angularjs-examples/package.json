@@ -15,7 +15,7 @@
     "todo"
   ],
   "peerDependencies": {
-    "@ng2react/support": "^1.0.0-rc.2",
+    "@ng2react/support": "^1.0.0-rc.6",
     "angular": "^1.8.3",
     "angular-route": "^1.8.3",
     "lodash": "^4.17.21",
