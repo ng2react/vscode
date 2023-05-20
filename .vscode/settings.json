@@ -18,5 +18,8 @@
         "source.organizeImports": true
     },
     "prettier.configPath": ".prettierrc.json",
-    "prettier.tabWidth": 4
+    "prettier.tabWidth": 4,
+    "[ignore]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    }
 }

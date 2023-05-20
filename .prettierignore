@@ -5,3 +5,7 @@ coverage
 
 # Ignore all HTML files:
 *.html
+*.md
+package.json
+package-lock.json
+.idea
