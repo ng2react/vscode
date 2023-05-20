@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
 import Config from '../Config';
-import displayMarkdownResult from './displayMarkdownResult';
+import displayMarkdownResult, { displayPrompt } from './displayMarkdownResult';
 import { getDummyResponse, isSandbox } from './sandboxMode';
 import { writeJsx, writeMarkdown } from './writeToFile';
 export type AngularComponent = ReturnType<typeof search>[0];
@@ -16,7 +16,7 @@ export default async function convertToReact(uri: vscode.Uri, componentName: str
     }
     currentConversion = componentName;
     vscode.window.showInformationMessage(`Converting ${componentName}. This could take some time...`);
-    const results = await vscode.window.withProgress(
+    const { prompt, results } = await vscode.window.withProgress(
         { cancellable: false, location: vscode.ProgressLocation.Window, title: `Converting ${currentConversion}` },
         async (progress, cancellationToken) => {
             try {
@@ -35,6 +35,9 @@ export default async function convertToReact(uri: vscode.Uri, componentName: str
                 }
                 if (message.command === 'writeMarkdown') {
                     return writeMarkdown(markdown, componentName, uri);
+                }
+                if (message.command === 'showPrompt') {
+                    return void displayPrompt(prompt);
                 }
                 return undefined;
             },
@@ -60,7 +63,7 @@ async function doConversion(
         throw Error('Conversion failed: OpenAI API key is not set');
     }
     if (cancellationToken.isCancellationRequested) {
-        return [];
+        return { results: [], prompt: '' };
     }
 
     const content = (await vscode.window.showTextDocument(uri)).document.getText();
