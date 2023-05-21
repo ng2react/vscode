@@ -3,5 +3,7 @@
   "ng2react.sandbox": false,
   "ng2react.source.angularRoot": "src/angular",
   "ng2react.source.reactRoot": "src/react",
-  "ng2react.source.testRoot": "src/test"
+  "ng2react.source.testRoot": "src/test",
+  "ng2react.customPrompt.enabled": true,
+  "ng2react.customPrompt.location": ".ng2react"
 }

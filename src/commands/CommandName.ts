@@ -1,11 +1,12 @@
+import * as vscode from 'vscode';
 import analyseFileCmd from './analyseFile';
 import { convertToReactCmd } from './convertToReact';
-import * as vscode from 'vscode';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const Ng2React = {
     convertToReact: 'ng2react.convertToReact',
     analyseFile: 'ng2react.analyseFile',
     refreshTreeView: 'ng2react.refreshTreeView',
+    initCustomPrompt: 'ng2react.initCustomPrompt',
 } as const;
 
 export type Ng2ReactCommand = (typeof Ng2React)[keyof typeof Ng2React];

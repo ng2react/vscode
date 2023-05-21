@@ -4,8 +4,9 @@ import * as vscode from 'vscode';
 import { Ng2React } from './commands/CommandName';
 import analyseFileCmd from './commands/analyseFile';
 import { convertToReactCmd } from './commands/convertToReact';
-import createNg2ReactTreeView from './views/Ng2ReactTreeView';
+import initCustomPrompt from './commands/initCustomPrompt';
 import isEnabled from './lib/isEnabled';
+import createNg2ReactTreeView from './views/Ng2ReactTreeView';
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -27,6 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand(Ng2React.refreshTreeView, () => {
             treeDataProvider.refresh();
         }),
+        vscode.commands.registerCommand(Ng2React.initCustomPrompt, (source) => initCustomPrompt(source)),
         vscode.window.createTreeView('ng2react.treeView', {
             showCollapseAll: true,
             treeDataProvider,

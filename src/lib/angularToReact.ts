@@ -67,6 +67,7 @@ async function doConversion(
     }
 
     const content = (await vscode.window.showTextDocument(uri)).document.getText();
+    const customPrompt = getCustomPrompt();
     progress.report({ message: `Querying ${model}`, increment: 10 });
     return convert(content, {
         // TODO: way to get updates from this
@@ -77,6 +78,7 @@ async function doConversion(
         organization: organisation || undefined,
         temperature,
         sourceRoot: getSourceRout(),
+        customPrompt,
     });
 }
 
@@ -91,4 +93,24 @@ function getSourceRout() {
         return undefined;
     }
     return absoluteSourceRoot;
+}
+
+function getCustomPrompt() {
+    if (!Config.get('customPrompt.enabled')) {
+        return undefined;
+    }
+    const customPromptPath = Config.get('customPrompt.location');
+    if (!customPromptPath) {
+        return undefined;
+    }
+    const absoluteCustomPromptPath = path.join(
+        vscode.workspace.workspaceFolders![0].uri.fsPath,
+        customPromptPath,
+        'patterns.ng2r.md'
+    );
+    if (!fs.existsSync(absoluteCustomPromptPath)) {
+        vscode.window.showInformationMessage(`Custom prompt ${customPromptPath} does not exist`);
+        return undefined;
+    }
+    return fs.readFileSync(absoluteCustomPromptPath, 'utf8');
 }

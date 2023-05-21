@@ -13,11 +13,13 @@ const KEY = {
     model: 'openai.model',
     temperature: 'openai.temperature',
     openai: 'openai',
+    customPromptEnabled: 'customPrompt.enabled',
+    customPromptSource: 'customPrompt.location',
 } as const;
 
-type ReturnsOptString = 'openai.organisation' | 'openai.apiKey';
+type ReturnsOptString = 'openai.organisation' | 'openai.apiKey' | 'customPrompt.location';
 type ReturnsString = `source.${'angular' | 'react' | 'test'}Root` | 'openai.model';
-type ReturnsBool = 'sandbox';
+type ReturnsBool = 'sandbox' | 'customPrompt.enabled';
 type ReturnsNumber = 'openai.temperature';
 
 export default class Config {
@@ -36,6 +38,16 @@ export default class Config {
         const config = vscode.workspace.getConfiguration('ng2react');
         return config.get(key);
     }
+
+    static set(key: 'enabled', value: 'yes' | 'no' | 'auto', target: vscode.ConfigurationTarget): Thenable<void>;
+    static set(key: ReturnsBool, value: boolean, target: vscode.ConfigurationTarget): Thenable<void>;
+    static set(key: ReturnsNumber, value: number, target: vscode.ConfigurationTarget): Thenable<void>;
+    static set(key: ReturnsOptString, value: string | undefined, target: vscode.ConfigurationTarget): Thenable<void>;
+    static set(key: ReturnsString, value: string, target: vscode.ConfigurationTarget): Thenable<void>;
+    static set(key: (typeof KEY)[keyof typeof KEY], value: unknown, target: vscode.ConfigurationTarget) {
+        const config = vscode.workspace.getConfiguration('ng2react');
+        return config.update(key, value, target);
+    }
 }
 
 export function getSourceRoot(key: 'angular' | 'react' | 'test') {
@@ -45,4 +57,12 @@ export function getSourceRoot(key: 'angular' | 'react' | 'test') {
         return undefined;
     }
     return absoluteSourceRoot;
+}
+
+export function getCustomPromptPath() {
+    const sourceRoot = Config.get('customPrompt.location');
+    if (!sourceRoot) {
+        return undefined;
+    }
+    return path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, sourceRoot);
 }

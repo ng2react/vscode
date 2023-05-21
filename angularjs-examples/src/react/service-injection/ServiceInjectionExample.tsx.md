@@ -1,40 +1,78 @@
+**Assumptions:**
+- The `MyService` class is already converted to a TypeScript class and exported.
+- The `MyService` class has a `getMessage` and `setMessage` method.
+- The `MyService` instance is provided via a React context.
+
 **Potential Issues:**
-- The AngularJS component uses a custom service called `MyCtrl`. In the React component, we will need to use a custom hook called `useService` to inject the service.
-- The AngularJS component uses the `require` method to load the HTML template. In the React component, we will need to include the JSX directly in the component.
+- The AngularJS component uses dependency injection for the service. In React, we will use context to provide the service instance.
+
+Here is the converted functional React component:
 
 ```tsx
 
 
-import React, { useState } from 'react'
-import { useService } from './useService'
+import React, { useContext, useState, useEffect } from 'react'
+import { MyService } from './MyService'
 
-const ServiceInjectionExample = () => {
-    const MyCtrl = useService('MyCtrl')
-    const [message, setMessage] = useState('')
+const MyServiceContext = React.createContext<MyService | null>(null)
 
-    const handleUpdateMessage = () => {
-        MyCtrl.updateMessage(message)
+const ServiceInjectionExample: React.FC = () => {
+  const myService = useContext(MyServiceContext)
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    if (myService) {
+      myService
+        .getMessage()
+        .then((msg) => setMessage(msg))
+        .catch((e) => setMessage('Error: ' + (e as Error).message))
     }
+  }, [myService])
 
-    return (
-        <div>
-            <label>
-                Message{' '}
-                <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                />
-            </label>{' '}
-            <button onClick={handleUpdateMessage}>Send</button>
-        </div>
-    )
+  const updateMessage = async () => {
+    if (myService) {
+      try {
+        await myService.setMessage(message)
+      } catch (e) {
+        setMessage('Error: ' + (e as Error).message)
+      } finally {
+        const msg = await myService.getMessage()
+        setMessage(msg)
+      }
+    }
+  }
+
+  return (
+    <div>
+      <label>
+        Message{' '}
+        <input
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        ></input>
+      </label>{' '}
+      <button onClick={updateMessage}>Send</button>
+    </div>
+  )
 }
 
 
 ```
 
-**Notes:**
-- In the AngularJS component, the `MyCtrl` service is used as a controller. In the React component, we are using the `useService` custom hook to inject the service.
-- The AngularJS component uses the `ng-model` directive to bind the input value to the `message` property in the controller. In the React component, we are using the `useState` hook to manage the state of the `message` property and the `onChange` event to update the state.
-- The AngularJS component uses the `ng-click` directive to call the `updateMessage` method in the controller. In the React component, we are using the `onClick` event to call the `handleUpdateMessage` function which in turn calls the `updateMessage` method from the `MyCtrl` service.
+To provide the `MyService` instance to the component, you can wrap it in a context provider:
+
+```tsx
+import { MyService } from './MyService'
+
+const myServiceInstance = new MyService()
+
+function App() {
+  return (
+    <MyServiceContext.Provider value={myServiceInstance}>
+      <ServiceInjectionExample />
+    </MyServiceContext.Provider>
+  )
+}
+
+export default App
+```
