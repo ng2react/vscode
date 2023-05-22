@@ -46,6 +46,12 @@
                 "title": "ng2react: Use Custom Prompt",
                 "shortTitle": "Use Custom Prompt",
                 "when": "ng2react.isActive"
+            },
+            {
+                "command": "ng2react.generateReactTest",
+                "title": "ng2react: Create React Unit Test",
+                "shortTitle": "Generate Test",
+                "when": "editorLangId == 'javascriptreact' || editorLangId == 'typescriptreact'"
             }
         ],
         "menus": {
@@ -61,6 +67,11 @@
                     "command": "ng2react.analyseFile",
                     "group": "ng2react",
                     "when": "ng2react.isActive && (editorLangId == 'typescript' || editorLangId == 'javascript')"
+                },
+                {
+                    "command": "ng2react.generateReactTest",
+                    "group": "ng2react",
+                    "when": "editorLangId == 'javascriptreact' || editorLangId == 'typescriptreact'"
                 }
             ]
         },
@@ -172,6 +183,16 @@
                     "default": ".ng2react",
                     "pattern": "^[a-zA-Z.]([a-zA-Z0-9_.\\-/]+)+$",
                     "description": "Folder where custom prompts can be found. Prompts must be markdown files with the extension .ng2react"
+                },
+                "ng2react.targetLanguage": {
+                    "type": "string",
+                    "default": "auto",
+                    "enum": [
+                        "typescript",
+                        "javascript",
+                        "auto"
+                    ],
+                    "description": "Language to use for generated React files"
                 }
             }
         }
@@ -187,7 +208,7 @@
         "test": "node ./out/test/runTest.js"
     },
     "devDependencies": {
-        "@ng2react/core": "^1.4.0",
+        "@ng2react/core": "^1.5.0-rc.0",
         "@types/glob": "^8.1.0",
         "@types/lodash": "^4.14.194",
         "@types/markdown-it": "^12.2.3",

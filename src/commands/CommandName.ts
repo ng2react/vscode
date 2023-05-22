@@ -7,6 +7,7 @@ export const Ng2React = {
     analyseFile: 'ng2react.analyseFile',
     refreshTreeView: 'ng2react.refreshTreeView',
     initCustomPrompt: 'ng2react.initCustomPrompt',
+    generateReactTest: 'ng2react.generateReactTest',
 } as const;
 
 export type Ng2ReactCommand = (typeof Ng2React)[keyof typeof Ng2React];

@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import { Ng2React } from './commands/CommandName';
 import analyseFileCmd from './commands/analyseFile';
 import { convertToReactCmd } from './commands/convertToReact';
+import generateReactTest from './commands/generateReactTest';
 import initCustomPrompt from './commands/initCustomPrompt';
 import isEnabled from './lib/isEnabled';
 import createNg2ReactTreeView from './views/Ng2ReactTreeView';
@@ -29,6 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
             treeDataProvider.refresh();
         }),
         vscode.commands.registerCommand(Ng2React.initCustomPrompt, (source) => initCustomPrompt(source)),
+        vscode.commands.registerCommand(Ng2React.generateReactTest, (uri) => generateReactTest(uri, context)),
         vscode.window.createTreeView('ng2react.treeView', {
             showCollapseAll: true,
             treeDataProvider,

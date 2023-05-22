@@ -15,6 +15,7 @@ const KEY = {
     openai: 'openai',
     customPromptEnabled: 'customPrompt.enabled',
     customPromptSource: 'customPrompt.location',
+    targetLanguage: 'targetLanguage',
 } as const;
 
 type ReturnsOptString = 'openai.organisation' | 'openai.apiKey' | 'customPrompt.location';
@@ -29,6 +30,8 @@ export default class Config {
         organisation: string | undefined;
         temperature: number;
     };
+    static get(key: 'source.testSuffix'): '.spec' | '.test';
+    static get(key: 'targetLanguage'): 'javascript' | 'typescript' | 'auto';
     static get(key: 'enabled'): 'yes' | 'no' | 'auto';
     static get(key: ReturnsBool): boolean;
     static get(key: ReturnsNumber): number;
@@ -39,6 +42,11 @@ export default class Config {
         return config.get(key);
     }
 
+    static set(
+        key: 'targetLanguage',
+        value: 'javascript' | 'typescript' | 'auto',
+        target: vscode.ConfigurationTarget
+    ): Thenable<void>;
     static set(key: 'enabled', value: 'yes' | 'no' | 'auto', target: vscode.ConfigurationTarget): Thenable<void>;
     static set(key: ReturnsBool, value: boolean, target: vscode.ConfigurationTarget): Thenable<void>;
     static set(key: ReturnsNumber, value: number, target: vscode.ConfigurationTarget): Thenable<void>;
@@ -54,6 +62,7 @@ export function getSourceRoot(key: 'angular' | 'react' | 'test') {
     const sourceRoot = Config.get(`source.${key}Root`) || 'src';
     const absoluteSourceRoot = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, sourceRoot);
     if (!fs.existsSync(absoluteSourceRoot)) {
+        fs.mkdirSync(absoluteSourceRoot, { recursive: true });
         return undefined;
     }
     return absoluteSourceRoot;
@@ -65,4 +74,9 @@ export function getCustomPromptPath() {
         return undefined;
     }
     return path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, sourceRoot);
+}
+
+export function getTargetLanguage() {
+    const targetLanguage = Config.get('targetLanguage');
+    return targetLanguage === 'auto' ? undefined : targetLanguage;
 }

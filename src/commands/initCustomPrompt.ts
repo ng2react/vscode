@@ -9,7 +9,7 @@ export default async function initCustomPrompt(source = Config.get('customPrompt
 
     Config.set('customPrompt.location', source, vscode.ConfigurationTarget.Workspace);
     if (!Config.get('customPrompt.enabled')) {
-        Config.set('customPrompt.enabled', true, vscode.ConfigurationTarget.Workspace);
+        await Config.set('customPrompt.enabled', true, vscode.ConfigurationTarget.Workspace);
     }
 
     const uri = vscode.Uri.file(vscode.workspace.workspaceFolders![0].uri.fsPath + '/' + source);

@@ -68,6 +68,7 @@ async function doConversion(
 
     const content = (await vscode.window.showTextDocument(uri)).document.getText();
     const customPrompt = getCustomPrompt();
+    const targetLanguage = Config.get('targetLanguage');
     progress.report({ message: `Querying ${model}`, increment: 10 });
     return convert(content, {
         // TODO: way to get updates from this
@@ -79,6 +80,7 @@ async function doConversion(
         temperature,
         sourceRoot: getSourceRout(),
         customPrompt,
+        targetLanguage: targetLanguage === 'auto' ? undefined : targetLanguage,
     });
 }
 
