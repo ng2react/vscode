@@ -125,8 +125,7 @@
                         "gpt-4",
                         "gpt-3.5-turbo"
                     ],
-                    "description": "OpenAI model to use. Currently only gpt modules are supported",
-                    "scope": "application"
+                    "description": "OpenAI model to use. Currently only gpt modules are supported"
                 },
                 "ng2react.openai.orginisation": {
                     "order": 4,
@@ -140,8 +139,7 @@
                     "default": 0.2,
                     "minimum": 0,
                     "maximum": 2,
-                    "description": "Temperature to use with openai",
-                    "scope": "application"
+                    "description": "Temperature to use with openai"
                 },
                 "ng2react.source.angularRoot": {
                     "type": "string",
@@ -208,7 +206,7 @@
         "test": "node ./out/test/runTest.js"
     },
     "devDependencies": {
-        "@ng2react/core": "^1.5.0-rc.0",
+        "@ng2react/core": "^1.5.0",
         "@types/glob": "^8.1.0",
         "@types/lodash": "^4.14.194",
         "@types/markdown-it": "^12.2.3",

@@ -1,9 +1,9 @@
 {
   "ng2react.enabled": "yes",
-  "ng2react.sandbox": true,
+  "ng2react.sandbox": false,
+  "ng2react.openai.model": "gpt-4",
   "ng2react.source.angularRoot": "src/angular",
   "ng2react.source.reactRoot": "src/react",
   "ng2react.source.testRoot": "src/test",
-  "ng2react.customPrompt.enabled": true,
-  "ng2react.customPrompt.location": ".ng2react"
+  "ng2react.targetLanguage": "typescript"
 }

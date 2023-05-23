@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import { startCase } from 'lodash';
 import path from 'path';
 import * as vscode from 'vscode';
-import { getSourceRoot } from '../Config';
+import { getSourceRoot, getTargetLanguage } from '../Config';
 export type AngularComponent = ReturnType<typeof search>[0];
 
 export function writeJsx(jsx: string, angularName: string, uri: vscode.Uri) {
@@ -52,7 +52,8 @@ export function toPascalCase(name: string) {
 
 function getNewFilePath(sourceFile: vscode.Uri, angularName: string) {
     const reactName = toPascalCase(angularName);
-    const fileExtension = sourceFile.path.endsWith('.ts') ? '.tsx' : '.jsx';
+    const language = getTargetLanguage(sourceFile);
+    const fileExtension = language === 'typescript' ? '.tsx' : '.jsx';
     const newFileName = reactName + fileExtension;
 
     const angularRoot = getSourceRoot('angular');

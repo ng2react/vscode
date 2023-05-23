@@ -21,6 +21,10 @@ export default async function convertToReact(uri: vscode.Uri, componentName: str
         async (progress, cancellationToken) => {
             try {
                 return await doConversion(uri, componentName, progress, cancellationToken);
+            } catch (e) {
+                console.error(e);
+
+                throw e;
             } finally {
                 currentConversion = '';
             }

@@ -76,7 +76,12 @@ export function getCustomPromptPath() {
     return path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, sourceRoot);
 }
 
-export function getTargetLanguage() {
+export function getTargetLanguage(uri: vscode.Uri): 'javascript' | 'typescript';
+export function getTargetLanguage(): 'javascript' | 'typescript' | 'auto';
+export function getTargetLanguage(uri?: vscode.Uri) {
     const targetLanguage = Config.get('targetLanguage');
-    return targetLanguage === 'auto' ? undefined : targetLanguage;
+    if (targetLanguage === 'auto' && uri) {
+        return path.extname(uri.fsPath).startsWith('.t') ? 'typescript' : 'javascript';
+    }
+    return targetLanguage;
 }

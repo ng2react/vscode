@@ -102,7 +102,7 @@ async function doApiCall(
 
 function getNewFilePath(sourceFile: vscode.Uri, newFileName: string) {
     const newFilePath = vscode.Uri.file(sourceFile.path.replace(/[^\/]+$/, newFileName));
-    const reactRoot = getSourceRoot('react');
+    const reactRoot = getSourceRoot('react') ?? getSourceRoot('angular');
     const testRoot = getSourceRoot('test');
     if (!(testRoot && reactRoot)) {
         return newFilePath;

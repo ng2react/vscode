@@ -4,9 +4,13 @@ import * as vscode from 'vscode';
 import Config from '../Config';
 import { ConvertToReactArgs, Ng2React } from '../commands/CommandName';
 import findAllAngularFiles from '../lib/findAllAngularFiles';
-import { findExistingConversions } from '../lib/searchDocument';
+import { findExistingConversions, findExistingTests } from '../lib/searchDocument';
 
-type TreeNode = { name: string; uri: vscode.Uri; type: 'react' | 'angular' | 'component' | 'file' | 'convert' };
+type TreeNode = {
+    name: string;
+    uri: vscode.Uri;
+    type: 'test' | 'react' | 'angular' | 'component' | 'file' | 'convert';
+};
 
 export default function createNg2ReactTreeView() {
     const onDidChangeTreeData = new vscode.EventEmitter<TreeNode | void>();
@@ -32,9 +36,8 @@ export default function createNg2ReactTreeView() {
                 return [
                     { ...parent, type: 'convert' },
                     { ...parent, type: 'angular' },
-                    ...findExistingConversions(parent.uri, parent.name).map(
-                        ({ name, uri }) => ({ name, uri, type: 'react' } satisfies TreeNode)
-                    ),
+                    ...findExistingConversions(parent.uri, parent.name),
+                    ...findExistingTests(parent.uri, parent.name),
                 ];
             }
             // Assume this is a React file
@@ -67,7 +70,7 @@ export default function createNg2ReactTreeView() {
                 };
             }
             return {
-                label: item.type === 'react' ? item.uri.path.split('/').pop()! : item.name,
+                label: item.uri.path.split('/').pop()!,
                 collapsibleState: vscode.TreeItemCollapsibleState.None,
                 resourceUri: item.uri,
                 command: {
