@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
 const KEY = {
@@ -59,13 +58,8 @@ export default class Config {
 }
 
 export function getSourceRoot(key: 'angular' | 'react' | 'test') {
-    const sourceRoot = Config.get(`source.${key}Root`) || 'src';
-    const absoluteSourceRoot = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, sourceRoot);
-    if (!fs.existsSync(absoluteSourceRoot)) {
-        fs.mkdirSync(absoluteSourceRoot, { recursive: true });
-        return undefined;
-    }
-    return absoluteSourceRoot;
+    const sourceRoot = Config.get(`source.${key}Root`);
+    return path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, sourceRoot);
 }
 
 export function getCustomPromptPath() {

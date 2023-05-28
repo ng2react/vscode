@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import Config, { getSourceRoot } from '../Config';
 import convertToReact from '../lib/angularToReact';
 export async function convertToReactCmd(
     filePath: vscode.Uri | undefined,
@@ -19,6 +20,22 @@ export async function convertToReactCmd(
 
     if (response !== 'Yes') {
         return;
+    }
+
+    if (!filePath.fsPath.includes(getSourceRoot('angular'))) {
+        if (
+            'Yes' !==
+            (await vscode.window.showWarningMessage(
+                `${shortFileName} was not found under ${Config.get(
+                    'source.angularRoot'
+                )}; ths may cause problems. Proceed anyway?`,
+                { modal: true },
+                'Yes',
+                'No'
+            ))
+        ) {
+            return;
+        }
     }
     try {
         await convertToReact(filePath, componentName, context);

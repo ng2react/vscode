@@ -20,7 +20,7 @@ export default function searchDocument(document: vscode.TextDocument) {
  * @param componentName name of angular component
  */
 export function findExistingConversions(componentFile: vscode.Uri, componentName: string) {
-    const componentFileDir = getReactFolder(componentFile);
+    const componentFileDir = getFolder(componentFile, 'react');
     const reactElementName = startCase(componentName).replace(/ /g, '');
     const convertedComponentFiles = ['jsx', 'tsx', 'jsx.md', 'tsx.md'].map((ext) => ({
         name: `${reactElementName}.${ext}`,
@@ -42,16 +42,14 @@ export function findExistingTests(componentFile: vscode.Uri, componentName: stri
 
     return testFiles.filter(({ uri }) => fs.existsSync(uri.fsPath));
 }
-function getReactFolder(angularFile: vscode.Uri) {
-    return getFolder(angularFile, 'react');
-}
-function getFolder(angularFile: vscode.Uri, folderName = 'react' as 'react' | 'test') {
+
+function getFolder(angularFile: vscode.Uri, folderName: 'react' | 'test') {
     const angularRoot = getSourceRoot('angular');
     const folderRoot = getSourceRoot(folderName);
 
     const angularFileDir = path.dirname(angularFile.path);
 
-    if (!(angularRoot && folderRoot) || angularRoot === folderRoot) {
+    if (angularRoot === folderRoot) {
         return angularFileDir;
     }
 
