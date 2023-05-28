@@ -61,11 +61,14 @@ function getNewFilePath(sourceFile: vscode.Uri, angularName: string) {
 
     const newFilePath = sourceFile.path.replace(/[^\/]+$/, newFileName);
 
-    if (!(angularRoot && reactRoot) || angularRoot === reactRoot) {
+    if (angularRoot === reactRoot) {
         return { newFileName, newFilePath };
     }
     if (!newFilePath.includes(angularRoot)) {
         return { newFileName, newFilePath };
+    }
+    if (!fs.existsSync(reactRoot)) {
+        fs.mkdirSync(reactRoot, { recursive: true });
     }
     return { newFileName, newFilePath: newFilePath.replace(angularRoot, reactRoot) };
 }

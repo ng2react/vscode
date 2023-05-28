@@ -1,4 +1,5 @@
 import { generateReactTest } from '@ng2react/core';
+import * as fs from 'fs';
 import * as vscode from 'vscode';
 import Config, { getSourceRoot } from '../Config';
 import displayMarkdownResult, { displayPrompt } from '../lib/displayMarkdownResult';
@@ -102,13 +103,19 @@ async function doApiCall(
 
 function getNewFilePath(sourceFile: vscode.Uri, newFileName: string) {
     const newFilePath = vscode.Uri.file(sourceFile.path.replace(/[^\/]+$/, newFileName));
-    const reactRoot = getSourceRoot('react') ?? getSourceRoot('angular');
+    const reactRoot = getSourceRoot('react');
     const testRoot = getSourceRoot('test');
-    if (!(testRoot && reactRoot)) {
-        return newFilePath;
-    }
+
     if (reactRoot === testRoot) {
         return newFilePath;
+    }
+
+    if (!newFilePath.fsPath.includes(reactRoot)) {
+        return newFilePath;
+    }
+
+    if (!fs.existsSync(testRoot)) {
+        fs.mkdirSync(testRoot, { recursive: true });
     }
 
     const testFilePath = newFilePath.fsPath.replace(reactRoot, testRoot);

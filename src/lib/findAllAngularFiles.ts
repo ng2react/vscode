@@ -5,14 +5,26 @@ import * as vscode from 'vscode';
 import { getSourceRoot } from '../Config';
 
 export default async function findAllAngularFiles() {
-    const workspaceRoot = getSourceRoot('angular') ?? vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+    const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
     if (!workspaceRoot) {
         return [];
     }
+
+    const angularRoot = getSourceRoot('angular');
+    if (!fs.existsSync(angularRoot)) {
+        vscode.window.showErrorMessage('AngularJS source folder incorrectly configured.');
+        return [];
+    }
+
     const ignore = extractGlobsFromGitignore(workspaceRoot)?.join(',');
+
     const files = await vscode.workspace.findFiles('**/*.{js,ts}', `{${ignore}}`, 1000);
+
     return files
         .filter((f) => {
+            if (!f.fsPath.includes(angularRoot)) {
+                return false;
+            }
             const content = fs.readFileSync(f.fsPath, 'utf-8');
             return search(content).length > 0;
         })
