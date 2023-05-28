@@ -6,44 +6,108 @@ An experimental extension for converting AngularJS to React, leveraging OpenAI's
 
 ## Features
 
--   **Convert AngularJS Components**: The plugin allows users to easily convert AngularJS components to React components by sending the components to the ng2react core library, which uses TypeScript for parsing AngularJS components and the OpenAI API to generate the React version of the component.
+- **Convert AngularJS Components**: The plugin allows users to easily convert AngularJS components to React components by sending the components to the ng2react core library, which uses TypeScript for parsing AngularJS components and the OpenAI API to generate the React version of the component.
 
 ![Component Conversion](images/todolist-conversion-example.png)
 
 ## Requirements
 
--   **OpenAI API Key**: The plugin requires an OpenAI API key to be set in the `ng2react.apiKey` setting. You can get an API key by signing up for the [OpenAI API](https://beta.openai.com/).
+- **OpenAI API Key**: The plugin requires an OpenAI API key to be set in the `ng2react.apiKey` setting. You can get an API key by signing up for the [OpenAI API](https://beta.openai.com/).
 
 ## Extension Settings
 
-This extension contributes the following settings:
+1. **ng2react.enabled**
+   - Type: String
+   - Default: "auto"
+   - Options: "yes", "no", "auto"
+   - Description: Enable ng2react. If 'auto' is selected, ng2react will only be enabled if an angularjs project is detected
 
--   `ng2react.openai.apiKey`: The OpenAI API key to use for generating React components from AngularJS components.
--   `ng2react.openai.model`: The OpenAI engine to use for generating React components from AngularJS components. Defaults to `gpt-4`.
--   `ng2react.openai.temperature`: The OpenAI temperature to use for generating React components from AngularJS components. Defaults to `0.2`.
--   `ng2react.openai.orginization`: An optional organization ID assiciated with your OpenAI account.
--   `ng2react.angularRoot`: The source root of your AngularJS code. Defaults to `src`.
--   `ng2react.reactRoot`: The source root of your AngularJS code. Defaults to `src`.
--   `ng2react.testRoot`: The source root where React unit tests should be generated
--   `ng2react.testFileSuffix`: Default test file suffix. Defaults to `.test.tsx`.
--   `ng2react.enabled`: Whether or not the extension is enabled. Defaults to `auto`.
--   `ng2react.sandboxMode`: Whether or not to run the extension in sandbox mode. Defaults to `false`.
+2. **ng2react.sandbox**
+   - Type: Boolean
+   - Default: false
+   - Description: Enable sandbox mode. This will disable all network requests and generate a dummy response. Useful for UI testing and debugging.
+
+3. **ng2react.openai.apiKey**
+   - Type: String
+   - Scope: Application
+   - Description: API key for openai
+
+4. **ng2react.openai.model**
+   - Type: String
+   - Default: "gpt-4"
+   - Options: "gpt-4", "gpt-3.5-turbo"
+   - Description: OpenAI model to use. Currently only gpt modules are supported
+
+5. **ng2react.openai.orginisation**
+   - Type: String
+   - Scope: Application
+   - Description: Optional organization ID to use with openai
+
+6. **ng2react.openai.temperature**
+   - Type: Number
+   - Default: 0.2
+   - Range: 0 to 2
+   - Description: Temperature to use with openai
+
+7. **ng2react.source.angularRoot**
+   - Type: String
+   - Default: "src"
+   - Description: Root of your angularjs source code, where all your angularjs components and templates are located
+
+8. **ng2react.source.reactRoot**
+   - Type: String
+   - Default: "src"
+   - Description: Root of your React source code, where generated React files will be saved
+
+9. **ng2react.source.testRoot**
+   - Type: String
+   - Default: "src"
+   - Description: Root of your React test code, where generated React test files will be saved
+
+10. **ng2react.source.testSuffix**
+    - Type: String
+    - Default: ".test"
+    - Options: ".test", ".spec"
+    - Description: Suffix for generated test files (e.g. MyComponent.test.jsx)
+    - Required: "ng2react.source.testRoot"
+
+11. **ng2react.customPrompt.enabled**
+    - Type: Boolean
+    - Default: false
+    - Description: Enable custom prompts. This will allow you to provide your own prompts for ng2react to use. Useful for testing and debugging.
+
+12. **ng2react.customPrompt.location**
+    - Type: String
+    - Default: ".ng2react"
+    - Description: Folder where custom prompts can be found. Prompts must be markdown files with the extension .ng2react
+
+13. **ng2react.targetLanguage**
+    - Type: String
+    - Default: "auto"
+    - Options: "typescript", "javascript", "auto"
+    - Description: Language to use for generated React files
+
 
 ## Known Issues
 
-This is an early alpha release of the extension. There are many known issues and limitations, including:
+There are many known issues and limitations, including:
 
--   AI Generated Code: The generated code is not guaranteed to be correct. It is generated by an AI model and may contain bugs.
--   Limited Support: The extension currently only supports converting AngularJS components to React components. It does not support converting AngularJS services, directives, or other types of AngularJS code.
+- AI Generated Code: The generated code is not guaranteed to be correct. It is generated by an AI model and may contain bugs.
+- Limited Support: The extension currently only supports converting AngularJS components to React components. It does not support converting AngularJS services, directives, or other types of AngularJS code.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+First MVP released!
 
-### 0.1.0
+### 1.0.0
 
--   Replaced `ng2react.sourceRoot` property with `ng2react.angularRoot` and `ng2react.reactRoot`
--   Fixed default entry for `ng2react.openai.orginization`
+- Added custom prompt support
+- Added test generation
+- Added prompt review (after generation)
+- Added ability to save response as Markdown or J/TSX
+- Added ability to select target (JSX/TSX)
+- Added Treeview to display all source and converted files
+- Fixed numerous bugs
 
 ## Wrapping React Components
 
