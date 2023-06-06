@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import { Ng2React } from './commands/CommandName';
 import analyseFileCmd from './commands/analyseFile';
+import checkConnectionCmd from './commands/checkConnection';
 import { convertToReactCmd } from './commands/convertToReact';
 import generateReactTest from './commands/generateReactTest';
 import initCustomPrompt from './commands/initCustomPrompt';
@@ -22,6 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
     // The commandId parameter must match the command field in package.json
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration(updateContext),
+        vscode.commands.registerCommand(Ng2React.checkConnection, checkConnectionCmd),
         vscode.commands.registerCommand(Ng2React.analyseFile, (uri) => analyseFileCmd(uri)),
         vscode.commands.registerCommand(Ng2React.convertToReact, (filePath, componentName) =>
             convertToReactCmd(filePath, componentName, context)

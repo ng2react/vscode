@@ -43,3 +43,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Added ability to select target (JSX/TSX)
 - Added Treeview to display all source and converted files
 - Fixed numerous bugs
+
+## [1.0.2] - 2023-06-06
+
+- Added "Check Connection command

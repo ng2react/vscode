@@ -1,3 +1,4 @@
+import { ConvertOptions } from '@ng2react/core';
 import * as path from 'path';
 import * as vscode from 'vscode';
 const KEY = {
@@ -25,7 +26,7 @@ type ReturnsNumber = 'openai.temperature';
 export default class Config {
     static get(key: 'openai'): {
         apiKey: string | undefined;
-        model: 'gpt-4' | 'gpt-3-turbo';
+        model: ConvertOptions['model'];
         organisation: string | undefined;
         temperature: number;
     };

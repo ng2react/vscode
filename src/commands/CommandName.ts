@@ -8,6 +8,7 @@ export const Ng2React = {
     refreshTreeView: 'ng2react.refreshTreeView',
     initCustomPrompt: 'ng2react.initCustomPrompt',
     generateReactTest: 'ng2react.generateReactTest',
+    checkConnection: 'ng2react.checkConnection',
 } as const;
 
 export type Ng2ReactCommand = (typeof Ng2React)[keyof typeof Ng2React];
