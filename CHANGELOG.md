@@ -34,7 +34,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Replaced `ng2react.sourceRoot` property with `ng2react.angularRoot` and `ng2react.reactRoot`
 - Fixed default entry for `ng2react.openai.orginization`
 
-## [1.0.0] - 2023-05-28
+## [1.0.1] - 2023-05-28
 
 - Added custom prompt support
 - Added test generation
@@ -44,6 +44,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Added Treeview to display all source and converted files
 - Fixed numerous bugs
 
-## [1.0.2] - 2023-06-06
+## [1.0.3] - 2023-06-06
 
 - Added "Check Connection command

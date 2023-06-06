@@ -99,11 +99,11 @@ There are many known issues and limitations, including:
 
 First MVP released!
 
-### 1.0.2
+### 1.0.3
 
 - Added "Check Connection command
 
-### 1.0.0
+### 1.0.1
 
 - Added custom prompt support
 - Added test generation
